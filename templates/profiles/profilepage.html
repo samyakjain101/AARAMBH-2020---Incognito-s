@@ -1,23 +1,53 @@
-{% if refer == "self" %}
-<h6><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></h6>
-{% endif %}
+{% extends 'base.html' %}{% load static %}
+{% block body_block %}
 
-{% if profile.profile_photo %}
-<img src="{{ profile.profile_photo.url }}" alt="">
-{% endif %}
+<section class="profile-page pt-5">
+	<div class="container">
+		<div class="profile-details row">
+			<div class="profile-image text-center col-lg-6 pb-3">
+			    {% if profile.profile_photo %}
+					<img src="{{ profile.profile_photo.url }}" alt="">
+			    {% endif %}
+			</div>
+					
+			<div class="profile-text col-lg-6 p-3">
+				<div class="personal-details">
 
-<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
-<p>{{profile.profession}}</p>
-<p>{{ profile.bio | linebreaks }}</p>
-{{ profile.user.address.house_number }}
-{{ profile.user.address.locality }}
-{{ profile.user.address.city }}
-{{ profile.user.address.state }}
-{{ profile.user.email }}
-{{ profile.phone }}
-<a href="{{ profile.github }}"</a>
-<a href="{{ profile.facebook }}"</a>
-<a href="{{ profile.linkedin }}"</a>
-<a href="{{ profile.instagram }}"</a>
-<a href="{{ profile.twitter }}"</a>
+				{% if refer == "self" %}
+					<p>(You are seeing your view. See how others can see you. <a href="/profile/{{user.username}}">here</a>)</p>
+				{% elif request.user.username == profileUser %}
+					<p>(You are seeing how other can see you. Get back to your profile <a href="/profile">here</a>)</p>
+				{% endif %}
+
+				{% if refer == "self" %}
+					<h6><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></h6>
+				{% endif %}
 				
+					<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
+					<p>{{profile.profession}}</p>
+				</div>
+				<div class="user-bio pb-3">
+					<p>{{ profile.bio | linebreaks }}</p>
+				</div>
+				<div class="general-info">
+					<h5>General Info</h5>
+					<ul>
+						<li><span>Address</span>{{ profile.address }}</li>
+						<li><span>Email</span>{{ profile.user.email }}</li>
+						<li><span>Phone</span>{{ profile.phone }}</li>
+					</ul>
+				</div>
+				<div class="social-links pt-2">
+					<a href="{{ profile.facebook }}" class="fa fa-lg fa-facebook"></a>
+					<a href="{{ profile.linkedin }}" class="fa fa-lg fa-linkedin"></a>
+					<a href="{{ profile.instagram }}" class="fa fa-lg fa-instagram"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock body_block %}
+
+{% block script_block %}
+	<script src="{% static 'js/connection_request.js' %}"></script>
+{% endblock script_block %}

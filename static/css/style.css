@@ -240,3 +240,46 @@ header .search-form .button:hover {
 .footer .location i {
     font-size: 18px;
 }
+
+
+/* Profile page css */
+.profile-page .profile-text {
+    margin-bottom: 80px;
+    text-align: left;
+    font-size: medium;
+}
+
+.profile-text .personal-details {
+    font-size: small;
+}
+
+.profile-page div.profile-image img {
+    max-height: 400px;
+}
+
+.profile-page .profile-text h1 {
+    color: #ab1906;
+}
+
+.profile-page .general-info li {
+    list-style: none;
+    font-size: small;
+}
+
+.profile-page .general-info li span {
+    min-width: 150px;
+    display: inline-block;
+}
+
+.profile-page .social-links a {
+    text-decoration: none;
+    background: #ff1100;
+    color: #fff;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+.profile-page .social-links a:hover {
+    background: #ab1906;
+    color: #ffffff;
+}
