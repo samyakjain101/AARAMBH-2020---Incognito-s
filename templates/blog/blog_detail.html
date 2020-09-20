@@ -4,4 +4,14 @@
 <li>{{ blog.date }}</li>
 </ul>
 <p>{{ blog.text }}</p>
-                   
+
+<h4>Comments</h4>
+{% for comment in blog.comment_set.all %}
+
+<img src="{{comment.user.profile.profile_photo.url}}">
+
+<h5><a href="{% url 'profiles:profile_global' username=comment.user.username %}">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
+<p>{{ comment.date_created }}</p>
+<p>{{ comment.comment_text }}</p>
+            
+{% endfor %}
