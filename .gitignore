@@ -7,3 +7,4 @@ chat/migrations
 profiles/__pycache__
 post/migrations
 profiles/migrations
+db.sqlite3
