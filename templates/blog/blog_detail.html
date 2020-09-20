@@ -1,0 +1,7 @@
+<imgsrc="{{ blog.image.url }}" alt="">
+<ul>
+<li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+<li>{{ blog.date }}</li>
+</ul>
+<p>{{ blog.text }}</p>
+                   

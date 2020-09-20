@@ -1,0 +1,14 @@
+{% for blog in blogs %}
+<ul >
+<li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+<li>{{ blog.date }}</li>
+</ul>
+   
+<img src="{{ blog.image.url }}" alt="">
+                                       
+<a href="{% url 'blog:blog_detail_view' pk=blog.id %}">
+<h2>{{ blog.title }}</h2>
+</a>
+<p>{{ blog.text|truncatewords:35 }}</p>
+<a href="{% url 'blog:blog_detail_view' pk=blog.id %}">View More</a>
+{% endfor %}
