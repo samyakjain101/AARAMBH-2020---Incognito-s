@@ -14,10 +14,10 @@ class InboxView(LoginRequiredMixin, TemplateView):
     template_name = "chat/inbox.html"
     def get_context_data(self, **kwargs):
         users = User.objects.all()
-        chats = Chat.objects.filter(room = self.request.user.id)
+        contacts = Chat.objects.filter(room = self.request.user.id)
         context = {
             'users': users,
-            'chats': chats,
+            'contacts': contacts,
             }
         return context
 

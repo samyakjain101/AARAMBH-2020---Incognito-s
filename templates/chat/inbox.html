@@ -1,19 +1,63 @@
-{% extends 'base.html' %}{% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
+{% block css_block %}
+<script src="https://use.typekit.net/hoy3lrg.js"></script>
+<script>try { Typekit.load({ async: true }); } catch (e) { }</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/chat/chat.css' %}" />
+{% endblock css_block %}
 {% block body_block %}
-{% for chat in chats %}
-    {% for person in chat.room.all %}
-        {% if user != person %}
-        <a href="{% url 'chat:room' room_name=chat.chat_id %}">{{ person }}</a>
-        {% endif %}
-    {% endfor %}
-<br>
-{% endfor %}
+{{ room_name|json_script:"room-name" }}
+{{ current_user|json_script:"current-user" }}
+<div id="frame">
+    <div id="sidepanel">
+        <div id="profile">
+            <div class="wrap">
+                <img id="profile-img" src="{{ user.profile.profile_photo.url }}" alt="" />
+                <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+            </div>
+        </div>
+        <div id="search">
+            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" placeholder="Search contacts..." />
+        </div>
+        <div id="contacts">
+            <ul>
 
-<h3>New Chat:</h3>
-<ul>
-    {% for user in users %}
-    <li><button class="new_chat_btn" url="#" user_id="{{ user.id }}">{{ user }}</button></li>
-    {% endfor %}
-</ul>
+                {% for contact in contacts %}
+                {% for person in contact.room.all %}
+                {% if user != person %}
+                <li class="contact">
+                    <a class="wrap" href="{% url 'chat:room' room_name=contact.chat_id %}">
+                        <img src="{{ person.profile.profile_photo.url }}" alt="" />
+                        <div class="meta">
+                            <p class="name">{{ person.first_name }} {{ person.last_name }}</p>
+                            <p class="preview">{{contact.last_message}}</p>
+                        </div>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="bottom-bar">
+            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add
+                    Chat</span></button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contact-profile">
+            <img id="contact-profile-img" src="{{ user2.profile.profile_photo.url }}" alt="" />
+            <p>{{ user2.first_name }} {{ user2.last_name }}</p>
+        </div>
+        {% block message_block %}
+        {% endblock message_block %}
+    </div>
+</div>
 {% endblock body_block %}
+
+{% block script_block %}
+<script src="{% static 'js/room.js' %}"></script>
+{% endblock script_block %}
