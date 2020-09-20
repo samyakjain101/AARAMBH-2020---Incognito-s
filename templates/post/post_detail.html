@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% load static %}
+{% block body_block %}
+
+<div class="pt-1">
+    <div class="post-card card border-danger col-lg-4 col-md-8 col-sm-10 mx-auto mb-3">
+        <div class="card-header"><img class="img-circle img-fluid" src="{{ post.author.profile.profile_photo.url }}"
+                alt="userimg">
+            {{ post.author.first_name }} {{ post.author.last_name }}
+        </div>
+        <p class="caption">{{post.content}}</p>
+        <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div class="text-center row mb-2">
+                <a href="#" class="col-6"><i class="fa fa-thumbs-up"></i> Like</a>
+                <a href="#" class="col-6"><i class="fa fa-comment"></i> Comment</a>
+            </div>
+            <div class="row">
+                <small class="col-6">{{ post.likes.all.count }} Likes, {{ post.comment_set.all.count }} Comments</small>
+                <small class="col-6 text-right">{{post.date}}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body_block %}
+
+{% block script_block %}
+{% endblock script_block %}

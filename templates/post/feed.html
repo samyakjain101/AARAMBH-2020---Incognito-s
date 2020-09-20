@@ -14,7 +14,7 @@
             {{ feed.author.first_name }} {{ feed.author.last_name }}
         </div>
         <p class="caption">{{feed.content}}</p>
-        <a href="#">
+        <a href="{% url 'post:feed_detail' pk=feed.id %}">
             <img src="{{ feed.image.url }}" class="card-img-top" alt="...">
         </a>
         <div class="card-body">

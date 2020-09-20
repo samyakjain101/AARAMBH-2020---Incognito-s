@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.detail import DetailView
 from .models import Post
 from .forms import PostForm
 # Create your views here.
@@ -26,3 +28,6 @@ def feed_view(request):
     else:
         form = PostForm()
     return render(request, "post/feed.html" , context = {'feeds': feeds, 'form':form})
+
+class PostDetailView(LoginRequiredMixin ,DetailView):
+    model = Post
