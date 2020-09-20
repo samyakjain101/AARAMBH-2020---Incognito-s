@@ -24,6 +24,7 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('', include('blog.urls')),
     path('', include('post.urls')),
+    path('', include('notification.urls')),
 ]
 
 if settings.DEBUG: 

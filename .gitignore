@@ -1,11 +1,13 @@
+CampusConnect/__pycache__
 blog/__pycache__
 blog/migrations
-CampusConnect/__pycache__
 chat/__pycache__
-post/__pycache__
 chat/migrations
-profiles/__pycache__
+post/__pycache__
 post/migrations
+profiles/__pycache__
 profiles/migrations
+notification/__pycache__
+notification/migrations
 db.sqlite3
 media

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'profiles',
     'blog',
     'post',
+    'notification',
 ]
 
 MIDDLEWARE = [
