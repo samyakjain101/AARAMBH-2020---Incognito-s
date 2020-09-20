@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, CreateView
+from django.views.generic.edit import UpdateView #for edit profile
 from .forms import *
 # Create your views here.
 
@@ -29,3 +30,31 @@ class UserRegistration(CreateView):
             return render(self.request,'registration/register_success.html')
         else:
             return super().form_valid(form)
+
+class ProfileView(TemplateView): #this is self view
+    template_name = "profiles/profilepage.html"
+    def get_context_data(self, **kwargs):
+        profile = Profile.objects.get(user=User.objects.get(id=self.request.user.id))
+        context = {
+            'profile' : profile,
+            'refer' : "self" #this is ensuring all self view components load up
+            }
+        return context
+
+class EditProfile(UpdateView):
+    
+    def get_object(self):
+        return get_object_or_404(Profile, user__username=self.request.user.username)
+
+    model = Profile
+    fields = [
+        'profile_photo', 
+        'phone', 
+        'address', 
+        'profession', 
+        'facebook', 
+        'instagram', 
+        'linkedin'
+        ] # Keep listing whatever fields 
+    
+    template_name = 'profiles/editprofile.html'

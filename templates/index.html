@@ -1,7 +1,7 @@
 <h1>Welcome</h1>
 <h3>Choose an option from below.</h3>
 {% if user.is_authenticated %}
-
+    <a href="{% url 'profiles:profile_detail' %}">Profile<a/> <br>
     <a href="{% url 'profiles:logout' %}">Log out</a> <br>
 {% else %}
     <a href="{% url 'profiles:login' %}">Log in</a><br>

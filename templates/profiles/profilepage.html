@@ -1,0 +1,23 @@
+{% if refer == "self" %}
+<h6><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></h6>
+{% endif %}
+
+{% if profile.profile_photo %}
+<img src="{{ profile.profile_photo.url }}" alt="">
+{% endif %}
+
+<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
+<p>{{profile.profession}}</p>
+<p>{{ profile.bio | linebreaks }}</p>
+{{ profile.user.address.house_number }}
+{{ profile.user.address.locality }}
+{{ profile.user.address.city }}
+{{ profile.user.address.state }}
+{{ profile.user.email }}
+{{ profile.phone }}
+<a href="{{ profile.github }}"</a>
+<a href="{{ profile.facebook }}"</a>
+<a href="{{ profile.linkedin }}"</a>
+<a href="{{ profile.instagram }}"</a>
+<a href="{{ profile.twitter }}"</a>
+				
