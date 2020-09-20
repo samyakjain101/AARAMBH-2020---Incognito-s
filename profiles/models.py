@@ -12,7 +12,7 @@ class Profile(models.Model):
     instagram = models.URLField(max_length=100, blank=True, null=True)
     linkedin = models.URLField(max_length=100, blank=True, null=True)
     connections = models.ManyToManyField("self", blank=True)
-    profile_photo = models.ImageField(blank=True)
+    profile_photo = models.ImageField(default='default_user.png')
 
     class Meta:
         verbose_name = "Profile"

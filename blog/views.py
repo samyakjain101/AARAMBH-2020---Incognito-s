@@ -2,6 +2,9 @@ from blog.models import Blog
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 class BlogView(TemplateView):
@@ -25,7 +28,6 @@ class CreateBlog(LoginRequiredMixin,CreateView):
     model = Blog
     fields = ('title','text','image')
     success_url = reverse_lazy('blog:manage_blog')
-    # define get_absolute_url instead later
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
@@ -46,11 +48,5 @@ class CreateBlog(LoginRequiredMixin,CreateView):
             blog.draft = True
 
         form.save()
-        # Adding Permissions to edit and delete this blog for user
-
         current_user = User.objects.get(id = self.request.user.id)
-
-        # assign_perm('edit_own_blog', current_user , blog)
-        # assign_perm('delete_own_blog', current_user , blog)
-
         return super().form_valid(form)

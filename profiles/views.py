@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, CreateView, DetailView
-from django.views.generic.edit import UpdateView #for edit profile
+from django.views.generic.edit import UpdateView
 from django.urls import reverse
 from .forms import *
 # Create your views here.

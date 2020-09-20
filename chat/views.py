@@ -44,6 +44,7 @@ class RoomView(LoginRequiredMixin, TemplateView):
         contacts = Chat.objects.filter(room = self.request.user.id)
 
         context = {
+            'users' : User.objects.exclude(id=self.request.user.id),
             'room_name': self.kwargs['room_name'],
             'current_user': self.request.user.username,
             'user2': user2,
@@ -51,3 +52,27 @@ class RoomView(LoginRequiredMixin, TemplateView):
             'contacts' : contacts,
             }
         return context
+
+# Create New Chat room if it does not exist already.
+@login_required
+def create_room(request):
+    jsonr = {}
+    if request.is_ajax():
+        current_user = User.objects.get(id = request.user.id)
+        try:
+            user_id = User.objects.get(id = request.GET.get('user_id'))
+            if not current_user == user_id:
+                chat_obj = Chat.objects.filter(room = current_user).filter(room = user_id)
+                if not chat_obj.exists():
+                    obj = Chat.objects.create(chat_id = uuid.uuid4())
+                    obj.room.add(current_user, user_id)
+                    jsonr['redirect'] = str(obj.chat_id)
+                else:
+                    if chat_obj.count() == 1:
+                        jsonr['redirect'] = str(chat_obj[0].chat_id)
+                    print('Room already exists')
+            else:
+                print("Can't chat to yourselves, right now")
+        except ObjectDoesNotExist:
+            raise PermissionDenied
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
