@@ -1,9 +1,11 @@
 from blog.models import Blog
 from django.shortcuts import render
-from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.models import User
+from django.views.generic import TemplateView
+from  django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -50,3 +52,43 @@ class CreateBlog(LoginRequiredMixin,CreateView):
         form.save()
         current_user = User.objects.get(id = self.request.user.id)
         return super().form_valid(form)
+
+class ManageBlog(LoginRequiredMixin,ListView):
+    template_name = 'blog/blog_manage.html'
+    model = Blog
+    def get_queryset(self):
+        queryset_original = super().get_queryset()
+        return queryset_original.filter(user=self.request.user.id).order_by('-date')
+
+class EditBlog(LoginRequiredMixin,UpdateView):
+    permission_required = 'blog.edit_own_blog'
+    model = Blog
+    fields = ['title','text','image']
+
+    def form_valid(self,form):
+
+        if "upload" in self.request.POST:
+            form.instance.draft = False
+        else:
+            form.instance.draft = True
+
+        form.save()
+        return super().form_valid(form)
+
+
+class BlogDelete(LoginRequiredMixin,DeleteView):
+    permission_required = 'blog.delete_own_blog'
+    model = Blog
+    success_url = reverse_lazy('blog:manage_blog')
+
+class ManageBlogDetailView(DetailView):
+    template_name = "blog/blog_manage_detail_view.html"
+    model = Blog
+    def get_queryset(self):
+        queryset_original = super().get_queryset()
+        return queryset_original.filter(user=self.request.user.id).order_by('-date')
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['x'] = self.object.text.split("\n")
+        data['recent_blogs'] = Blog.objects.filter(display=True,draft=False).exclude(id=self.object.id).order_by('-date')[:3]
+        return data
