@@ -179,10 +179,12 @@
 }
 
 #frame #sidepanel #contacts ul li.contact .wrap {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    position: relative;
+width: 90%;
+margin: 0 auto;
+display: flex;
+text-decoration: none;
+position: relative;
+color: #fff;
 }
 
 @media screen and (max-width: 735px) {
@@ -221,6 +223,8 @@
 
 .contact .meta .name {
     font-weight: bold;
+    color: #fff;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 735px) {
@@ -387,6 +391,7 @@
 
 #frame .content .messages ul li.sent p {
     background: #ab1906;
+    opacity: 1;
     color: #fff;
     float: left;
 }
