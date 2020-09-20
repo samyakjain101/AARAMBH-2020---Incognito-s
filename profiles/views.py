@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DetailView
 from django.views.generic.edit import UpdateView #for edit profile
+from django.urls import reverse
 from .forms import *
 # Create your views here.
 
@@ -58,3 +59,20 @@ class EditProfile(UpdateView):
         ] # Keep listing whatever fields 
     
     template_name = 'profiles/editprofile.html'
+
+    def get_success_url(self):
+        success_url = '/'
+        return success_url
+
+class ProfileDetailView(DetailView): #this is for global page
+    object = Profile
+    template_name = "profiles/profilepage.html"
+
+    def get_object(self):
+        return get_object_or_404(Profile, user__username=self.kwargs['username'])
+    
+    def get_context_data(self, **kwargs):          
+        context = super().get_context_data(**kwargs)                     
+        context["refer"] = "global" 
+        context["profileUser"] = self.kwargs['username']
+        return context

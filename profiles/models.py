@@ -34,6 +34,9 @@ class Profile(models.Model):
         perc= (now/total)*100
         return int(perc)
 
+    # def get_absolute_url(self):
+    #     return u'/profile_detail/%d'
+
 def create_profile(sender, **kwargs):
     user = kwargs["instance"]
     if kwargs["created"]:
