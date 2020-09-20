@@ -1,0 +1,242 @@
+body {
+    background-color: #fffafa;
+}
+
+p {
+    opacity: 0.8;
+}
+
+/* Menu Css */
+
+.menu_toggler {
+    z-index: 999;
+    position: relative;
+    top: 23px;
+    display: block;
+    cursor: pointer;
+    align-items: center;
+}
+
+.menu_toggler span,
+.menu_toggler span::before,
+.menu_toggler span::after {
+    position: absolute;
+    content: '';
+    width: 35px;
+    height: 4px;
+    background: #ff1100;
+    border-radius: 20px;
+    transition: 500ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menu_toggler span::before {
+    top: -8px;
+}
+
+.menu_toggler span::after {
+    top: 8px;
+}
+
+.menu_toggler.active>span {
+    background: transparent;
+}
+
+.menu_toggler.active>span::before,
+.menu_toggler.active>span::after {
+    background: #ff1100;
+    top: 0px;
+}
+
+.menu_toggler.active>span::before {
+    transform: rotate(-225deg);
+}
+
+.menu_toggler.active>span::after {
+    transform: rotate(225deg);
+}
+
+.menu {
+    position: fixed;
+    left: -30%;
+    top: 0;
+    z-index: 998;
+    background: #ff1100;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    width: 30%;
+    height: 100%;
+    padding: 100px 70px;
+    display: -webkit-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menu a {
+    color: #f4f4f4;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+}
+
+.notification-icon {
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    color: #ff1100;
+}
+
+@media only screen and (max-width: 767px) {
+    .menu {
+        width: 300px;
+        left: -300px;
+        padding: 50px;
+    }
+
+    .menu_toggler {
+        z-index: 999;
+        position: absolute;
+        top: 33%;
+        display: block;
+        cursor: pointer;
+        align-items: center;
+        right: 18%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .menu {
+        width: 250px;
+        left: -250px;
+        padding: 50px;
+    }
+
+    .menu_toggler {
+        right: 23%;
+    }
+}
+
+.menu.active {
+    left: 0;
+}
+
+
+header {
+    width: 100%;
+    top: 0;
+    z-index: 5;
+}
+
+header .header-content {
+    margin: auto;
+}
+
+head .container {
+    margin: auto;
+}
+
+header .logo a {
+    color: #ff1100;
+    text-decoration: none;
+}
+
+header .search-form {
+    outline: 0;
+    height: 90%;
+    width: 100%;
+    float: left;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 4px;
+}
+
+header input,
+header button {
+    height: 100%;
+}
+
+header .search-form .textbox {
+    outline: 0;
+    line-height: 42px;
+    padding: 0 16px;
+    height: 50px;
+    background-color: #ffffffdd;
+    color: #ab1906;
+    border: 0;
+    float: left;
+    border-radius: 4px 0 0 4px;
+}
+
+header .search-form .textbox:focus {
+    outline: 0;
+    background-color: #ffffff;
+}
+
+header .search-form .button {
+    outline: 0;
+    background: none;
+    background-color: #ff1100;
+    float: left;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    line-height: 42px;
+    border: 0;
+    color: #fff;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 16px;
+    text-rendering: auto;
+    text-shadow: 0 1px 1px #ff1100;
+    transition: background-color 0.4s ease;
+    border-radius: 0 4px 4px 0;
+}
+
+header .search-form .button:hover {
+    background-color: #ff1100;
+    opacity: 0.7;
+}
+
+@media only screen and (max-width: 600px) {
+    header .search-form .button {
+        width: 15%;
+    }
+
+    header .search-form .textbox {
+        width: 85%;
+    }
+}
+
+.footer {
+    background: #ff1100;
+    width: 100%;
+    bottom: 0;
+    color: white;
+}
+
+.footer .links li a {
+    color: white;
+    -webkit-transition: color .2s;
+    opacity: 0.8;
+    transition: color .2s;
+}
+
+.footer .links li a:hover {
+    text-decoration: none;
+    opacity: 1;
+}
+
+.footer .about-company i {
+    font-size: 25px;
+}
+
+.footer .about-company a {
+    color: white;
+    transition: color .2s;
+}
+
+.footer .about-company a:hover {
+    color: #ffffff;
+}
+
+.footer .location i {
+    font-size: 18px;
+}

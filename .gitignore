@@ -1,0 +1,9 @@
+blog/__pycache__
+blog/migrations
+CampusConnect/__pycache__
+chat/__pycache__
+post/__pycache__
+chat/migrations
+profiles/__pycache__
+post/migrations
+profiles/migrations
