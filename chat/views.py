@@ -25,7 +25,7 @@ class RoomView(LoginRequiredMixin, TemplateView):
     template_name = "chat/room.html"
     def get_context_data(self, **kwargs):
 
-        # If room does not exist or id someone is trying to join a room of which he/she is not part of. Permission Denied
+        # If room does not exist or if someone is trying to join a room of which he/she is not part of. Permission Denied
         try:
             room_name = uuid.UUID(self.kwargs['room_name']).hex
         except ValueError:

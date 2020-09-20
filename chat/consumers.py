@@ -1,8 +1,10 @@
 import json
 import uuid
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Chat
+from .models import Chat, Message
 from django.contrib.auth.models import User
+from channels.db import database_sync_to_async
+from django.db.models import F
 from profiles.models import Profile
 
 # docker run -p 6379:6379 -d redis:5
@@ -24,7 +26,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': '{} is online'.format(self.scope['user'].username),
+                'message': '{} is online'.format(self.scope['user'].username)
             }
         )
 
@@ -58,7 +60,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'author': self.scope['user'].username,
                 }
             )
-
+            await database_sync_to_async(self.save_message)(message)
 
     # Receive message from room group
     async def chat_message(self, event):
@@ -75,5 +77,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({
                 'message': message
             }))
+
+    def save_message(self, message):
+        Message.objects.create(chat_id = uuid.UUID(self.room_name).hex, author = self.scope['user'], content = message)
 
         
