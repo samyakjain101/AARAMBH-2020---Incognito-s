@@ -8,3 +8,4 @@ profiles/__pycache__
 post/migrations
 profiles/migrations
 db.sqlite3
+media
