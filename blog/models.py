@@ -11,7 +11,7 @@ class Blog(models.Model):
     display = models.BooleanField()
     draft = models.BooleanField()
     image = models.ImageField(upload_to='blogs/',blank=True)
-    
+    comments = models.ManyToManyField(User, through='Comment')
     class Meta():
         unique_together=['user','title']
 
@@ -25,3 +25,12 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="b_user")
+    blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
+    comment_text = models.CharField(max_length=50,unique=True)
+    date_created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.comment_text
