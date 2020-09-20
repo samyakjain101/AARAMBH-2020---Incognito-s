@@ -60,7 +60,7 @@
         </nav>
         </div>
     </header>
-
+    {{ user.username|json_script:"notify-room-name" }}
     {% block body_block %}
     {% endblock body_block %}
 
@@ -106,8 +106,9 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/notification.js' %}"></script>
     {% block script_block %}
     {% endblock script_block %}
 </body>
 
-</html>
+</html> 

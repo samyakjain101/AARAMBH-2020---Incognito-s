@@ -9,7 +9,7 @@ from django.db.models import F
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['user'].username
-        self.room_group_name = 'notify_%s' % self.room_name
+        self.room_group_name = 'chat_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(
@@ -22,7 +22,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'notify_message',
+                'type': 'chat_message',
                 'message': 'Testing Notification'
             }
         )
@@ -44,7 +44,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'notify_message',
+                    'type': 'chat_message',
                     'message': message,
                 }
             )
