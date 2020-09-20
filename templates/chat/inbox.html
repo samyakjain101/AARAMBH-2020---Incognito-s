@@ -4,7 +4,7 @@
 {% for chat in chats %}
     {% for person in chat.room.all %}
         {% if user != person %}
-        <a href="#">{{ person }}</a>
+        <a href="{% url 'chat:room' room_name=chat.chat_id %}">{{ person }}</a>
         {% endif %}
     {% endfor %}
 <br>
