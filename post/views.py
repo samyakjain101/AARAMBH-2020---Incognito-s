@@ -35,6 +35,9 @@ def feed_view(request):
 class PostDetailView(LoginRequiredMixin ,DetailView):
     model = Post
 
+import channels.layers
+from asgiref.sync import async_to_sync
+
 @login_required
 def toggle_like_post(request):
     jsonr = {}
@@ -51,6 +54,25 @@ def toggle_like_post(request):
                 post.likes.add(user)
                 jsonr['likes_count'] = post.likes.all().count()
                 jsonr['message'] = 'liked'
+
+                #Send notification to Person whose post is liked
+                group_name = 'chat_%s' % post.author.username
+                message = '{} liked your post'.format(user)
+                channel_layer = channels.layers.get_channel_layer()
+
+                async_to_sync(channel_layer.group_send)(
+                    group_name,
+                    {
+                        'type': 'chat_message',
+                        'message': message
+                    }
+                )
+
+                
+
+
+
+
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
             

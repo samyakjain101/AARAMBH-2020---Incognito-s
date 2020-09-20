@@ -11,6 +11,7 @@ const notificationSocket = new WebSocket(
 notificationSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     console.log(data.message);
+    document.getElementById('notification').innerHTML = data.message;
 };
 
 notificationSocket.onclose = function (e) {
