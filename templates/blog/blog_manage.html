@@ -1,0 +1,32 @@
+<h1>Manage Blogs</h1>
+
+        
+            {% if blog_list %}
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Upload Date</th>
+                    <th>Edit Blog</th>
+                    <th>Delete Blog</th>
+                </tr>
+                {% for blog in blog_list %}
+                <tr>
+                    <td><b>{{ blog.title }}</b></td>
+                      {% if blog.draft and blog.display %}
+                      <td>Draft</td>
+                      {% elif blog.draft and not blog.display %}
+                      <td>Draft</td>
+                      {% elif not blog.draft and blog.display %}
+                      <td>Published</td>
+                      {% else %}
+                      <td>To be Verified</td>
+                      {% endif %}
+                   <td>{{blog.date}}</td>
+                    <td id="edit"> <input type="button" onclick="window.location.href='{{ blog.get_edit_url }}'" value="Edit"></td>
+                    <td id="delete"><input type="button" onclick="window.location.href='delete/{{ blog.id }}'" value="Delete"></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+      
