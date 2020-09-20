@@ -1,18 +1,27 @@
-<form class="login-form" method="POST" enctype=multipart/form-data>
+{% load static %}
+{% block css_block %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock css_block %}
+{% block body_block %}
+        <div class="login-page">
+
+<form class="login-form form" method="POST" enctype=multipart/form-data>
         {% csrf_token %}
         <h1>Register!</h1>
         {{ form.first_name.errors }}
-        <label>{{ form.first_name }}</label><br>
+        {{ form.first_name }}
         {{ form.last_name.errors }}
-        <label>{{ form.last_name }}</label><br>
+        {{ form.last_name }}
         {{ form.username.errors }}
-        <label>{{ form.username }}</label><br>
+        {{ form.username }}
         {{ form.email.errors }}
-        <label>{{ form.email }}</label><br>
+        {{ form.email }}
         {{ form.password.errors }}
-        <label>{{ form.password }}</label><br>
+        {{ form.password }}
         {{ form.confirm_password.errors }}
-        <label>{{ form.confirm_password }}</label><br>
-        <label><button type="submit" id='button' name="submit">Register</button><label>
-        {% comment %} <p class="message">Already registered? <a href="{% url "login" %}">Log In</a></p> {% endcomment %}
+        {{ form.confirm_password }}
+        <button type="submit" id='button' name="submit">Register</button>
+        <p class="message">Already registered? <a href="{% url "profiles:login" %}">Log In</a></p>
+        </div>
 </form>
+{% endblock body_block %} {% block footer %} {% endblock footer %}
