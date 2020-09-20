@@ -1,10 +1,27 @@
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, CreateView, DetailView
 from django.views.generic.edit import UpdateView #for edit profile
 from django.urls import reverse
 from .forms import *
 # Create your views here.
+
+def anonymous_required(function=None, redirect_url=None):
+
+   if not redirect_url:
+       redirect_url = settings.LOGIN_REDIRECT_URL
+
+   actual_decorator = user_passes_test(
+       lambda u: u.is_anonymous,
+       login_url=redirect_url
+   )
+
+   if function:
+       return actual_decorator(function)
+   return actual_decorator
+
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -31,6 +48,7 @@ class UserRegistration(CreateView):
             return render(self.request,'registration/register_success.html')
         else:
             return super().form_valid(form)
+
 
 class ProfileView(TemplateView): #this is self view
     template_name = "profiles/profilepage.html"
@@ -61,8 +79,9 @@ class EditProfile(UpdateView):
     template_name = 'profiles/editprofile.html'
 
     def get_success_url(self):
-        success_url = '/'
+        success_url = '/profile'
         return success_url
+
 
 class ProfileDetailView(DetailView): #this is for global page
     object = Profile
