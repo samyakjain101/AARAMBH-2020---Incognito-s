@@ -19,11 +19,13 @@
         </a>
         <div class="card-body">
             <div class="text-center row mb-2">
-                <a href="#" class="col-6 like"><i class="fa fa-thumbs-up"></i> Like</a>
+                <a href="#" pid="{{ feed.id }}" class="col-6 like" url="{% url 'post:toggle_like_post' %}"><i class="fa fa-thumbs-up"></i> Like</a>
                 <a href="#" class="col-6"><i class="fa fa-comment"></i> Comment</a>
             </div>
             <div class="row">
-                <small class="col-6">{{ feed.likes.all.count }} Likes, {{ feed.comment_set.all.count }} Comments</small>
+                <small class="col-6">{% if feed.likes.all.count == 1 %}{{ feed.likes.all.count }} Like{% else %}{{ feed.likes.all.count }} Likes{% endif %} , 
+                    {% if feed.comment_set.all.count == 1 %}{{ feed.comment_set.all.count }} Comment{% else %}{{ feed.comment_set.all.count }} Comments{% endif %}
+                </small>
                 <small class="col-6 text-right">{{feed.date}}</small>
             </div>
         </div>
@@ -35,4 +37,5 @@
 
 {% block script_block %}
 <script src="{% static 'js/feed.js' %}"></script>
+<script src="{% static 'js/post_like.js' %}"></script>
 {% endblock script_block %}

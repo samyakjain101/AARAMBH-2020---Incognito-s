@@ -1,8 +1,10 @@
+import json
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
+from django.http import HttpResponse
 from .models import Post
 from .forms import PostForm
 # Create your views here.
@@ -31,3 +33,24 @@ def feed_view(request):
 
 class PostDetailView(LoginRequiredMixin ,DetailView):
     model = Post
+
+@login_required
+def toggle_like_post(request):
+    jsonr = {}
+    if request.is_ajax():
+        user = request.user
+        post_id = request.GET.get('post_id')
+        try:
+            post = Post.objects.get(id=post_id)
+            if user in post.likes.all():
+                post.likes.remove(user)
+                jsonr['likes_count'] = post.likes.count()
+                jsonr['message'] = 'disliked'
+            else:
+                post.likes.add(user)
+                jsonr['likes_count'] = post.likes.all().count()
+                jsonr['message'] = 'liked'
+        except ObjectDoesNotExist:
+            jsonr['message'] = 'Something went wrong.'
+            
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')

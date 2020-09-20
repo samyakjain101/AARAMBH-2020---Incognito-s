@@ -15,20 +15,4 @@ $(document).ready(function () {
             console.log('Success');
         }
     });
-
-    $('.like').on('click', function (event) {
-        event.preventDefault()
-        var btn = $(this)
-        $.ajax({
-            type: "GET",
-            url: btn.attr('url'),
-            data: {
-                'post_id': btn.attr('pid'),
-            },
-            success: handleFormSuccess,
-        });
-        function handleFormSuccess(json) {
-            console.log(json.message);
-        }
-    });
 });
