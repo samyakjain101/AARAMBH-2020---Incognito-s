@@ -1,0 +1,10 @@
+<h1>Welcome</h1>
+<h3>Choose an option from below.</h3>
+{% if user.is_authenticated %}
+
+    <a href="#">Profile<a/> <br>
+    <a href="#">Log out</a> <br>
+{% else %}
+    <a href="#">Log in</a><br>
+    <a href="{% url 'profiles:register' %}">Register</a> 
+{% endif %}
