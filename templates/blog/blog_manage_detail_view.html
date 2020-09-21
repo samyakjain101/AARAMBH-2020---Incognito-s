@@ -1,41 +1,36 @@
 {% extends 'base.html' %} {% load static %}
+{% block css_block %}
+<link rel="stylesheet" href="{% static 'css/blog/blog.css' %}">
+{% endblock css_block %}
 {% block body_block %}
-{% if blog %}
-<div class='blog-section-div'>
+{% if blog %}<section class="blog_area single-post-area mt-4">
     <div class="container">
-        <div class="blog-section-wrapper">
-            <section class="blog-section">
-                <div class="blog-wrapper">
-                    <div class="blog-post">
-                        <div class="blog-title">
-                            <h1>{{ blog.title }}</h1>
+        <div class="row">
+            <div class="col-lg-10 mx-auto posts-list">
+                <div class="single-post row">
+                    <div class="col-lg-12">
+                        <div class="feature-img">
+                            <img class="img-fluid" src="{{ blog.image.url }}" alt="">
                         </div>
-                        <div class="author">
-                            <p>By {{ blog.user }}</p>
-                        </div>
-                        <div class="border-div"></div>
-
-                        {% if blog.image %}
-                        <div class="blog-picture">
-                            <img src="{{ blog.image.url }}" alt="">
-                        </div>
-                        {% endif %}
-                        <div class="publish-date">
-                            {{ blog.date }}
-                        </div>
-                        <div class="blog-content">
-                            {% for para in x %}
-                            <p>{{ para }}</p><br> {% endfor %}
-                        </div>
-                        <div class="blog-comments">
+                    </div>
+                    <div class="col-lg-3  col-md-3">
+                        <div class="blog_info">
+                                        <ul class="blog_meta list">
+                                            <li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+                                            <li>{{ blog.date }}</li>
+                                            <li>{{ blog.comments.all.count }} Comments</li>
+                                        </ul>
 
                         </div>
                     </div>
+                    <div class="col-lg-9 col-md-9 blog_details">
+                        <p class="excert">
+                            {{ blog.text }}
+                        </p>
+                    </div>
                 </div>
-            </section>
             </div>
         </div>
     </div>
-
-{% endif %}
+</section>{% endif %}
 {% endblock body_block %}
