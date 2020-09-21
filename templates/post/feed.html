@@ -1,7 +1,7 @@
 {% extends 'base.html' %}{% load static %}
 {% block body_block %}
 
-<form id='post-form' action="" method="post" enctype="multipart/form-data">
+<form id='post-form' class='col-lg-5 col-md-8 mx-auto' action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input class="btn btn-danger rounded-0" type="submit" value="Post">

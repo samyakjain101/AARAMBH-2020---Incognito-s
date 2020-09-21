@@ -298,6 +298,10 @@ header .search-form .button:hover {
     color: #ff1100;
 }
 
+.caption{
+    padding: 10px 0 0 0;
+}
+
 .card-header strong{
     height:50%;
     font-size: 1.2rem;
