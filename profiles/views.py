@@ -156,7 +156,7 @@ def accept_connection_request(request):
             subject = "You have 1 notification"
             from_email = settings.EMAIL_HOST_USER
             to_mail = [sender.email]
-            send_notification(sender, message)
+            send_notification(current_user, sender, message)
             #Send email to Person whose request is accepted
             message = '{} {} accepted your connection request.'.format(current_user.first_name,current_user.last_name)
             send_email(subject,message,from_email,to_mail)
@@ -204,7 +204,7 @@ def send_connection_request(request):
                     subject = "You have 1 notification"
                     from_email = settings.EMAIL_HOST_USER
                     to_mail = [to_user.email]
-                    send_notification(to_user, message)
+                    send_notification(from_user, to_user, message)
                     #Send email to Person to whom request is sent
                     message = '{} {} requested to connect to you.'.format(from_user.first_name,from_user.last_name)
                     send_email(subject,message,from_email,to_mail)

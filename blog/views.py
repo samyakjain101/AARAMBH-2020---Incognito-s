@@ -15,6 +15,7 @@ from django.core.mail import BadHeaderError, send_mail #for sending mail
 from django.conf import settings # for getting from mail (sending mail)
 from post.views import send_notification, send_email
 
+
 # Create your views here.
 class BlogView(TemplateView):
     template_name = "blog/blog.html"
@@ -121,7 +122,7 @@ def blog_comment(request):
             subject = "You have 1 notification"
             from_email = settings.EMAIL_HOST_USER
             to_mail = [blog.user.email]
-            send_notification(blog.user, message)
+            send_notification(user,blog.user, message)
             #Send email to Person whose blog is commented
             message = '{} commented on your blog \n {}'.format(user,blog.title)
             send_email(subject,message,from_email,to_mail)

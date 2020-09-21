@@ -10,11 +10,12 @@ from django.views.generic.detail import DetailView
 
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment
+from notification.models import Notification
 
 from .forms import PostForm
 # Create your views here.
 
-def send_notification(to_user, message):
+def send_notification(from_user, to_user, message):
     group_name = 'chat_%s' % to_user.username
     channel_layer = channels.layers.get_channel_layer()
 
@@ -25,6 +26,10 @@ def send_notification(to_user, message):
             'message': message
         }
     )
+
+    #Saving notification
+    notify = Notification(from_user=from_user,to_user=to_user,text= message)
+    notify.save
 
 @login_required
 def feed_view(request):
@@ -76,7 +81,7 @@ def toggle_like_post(request):
                 subject = "You have 1 notification"
                 from_email = settings.EMAIL_HOST_USER
                 to_mail = [post.author.email]
-                send_notification(post.author, message)
+                send_notification(user,post.author, message)
                 #Send email to Person whose post is liked
                 message = '{} {} liked your post \n {}'.format(user.first_name,user.last_name,post.content)
                 send_email(subject,message,from_email,to_mail)
@@ -108,7 +113,7 @@ def post_comment(request):
             subject = "You have 1 notification"
             from_email = settings.EMAIL_HOST_USER
             to_mail = [post.author.email]
-            send_notification(post.author, message)
+            send_notification(user, post.author, message)
             #Send email to Person whose post is commented
             message = '{} {} commented on your post \n {}'.format(user.first_name,user.last_name,post.content)
             send_email(subject,message,from_email,to_mail)
