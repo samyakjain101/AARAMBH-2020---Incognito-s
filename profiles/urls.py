@@ -12,4 +12,6 @@ urlpatterns = [
     path('profile/edit/', login_required(EditProfile.as_view()),name='profile_edit'),
     path('profile/<str:username>', ProfileDetailView.as_view(), name='profile_global'),
     path('search/', search,name="search"),
+    path('ajax/accept_connection_request/', accept_connection_request ,name="accept_connection_request"),
 ]
+ 
