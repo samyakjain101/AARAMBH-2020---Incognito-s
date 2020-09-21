@@ -326,3 +326,58 @@ header .search-form .button:hover {
 .form-group .btn:hover {
     background: #ff1100;
 }
+
+#fb {
+    border: 1px solid #ab1906;
+    border-radius: 5px;
+}
+
+#fb p {
+    margin: 0 0 0 10px;
+    line-height: 30px;
+}
+
+#fb-top span {
+    color: #ff1100;
+    float: right;
+    margin-right: 10px;
+}
+
+
+#info {
+    color: #ff1100;
+    line-height: 25px;
+    font-size: 18px;
+}
+
+#info span {
+    color: #777;
+    font-size: 14px;
+}
+
+.request{
+    background: #fff;
+    padding:1rem;
+}
+
+.confirm,
+.delete {
+    color: white;
+    padding: 7px;
+    border-radius: 2px;
+    border: 1px solid #ab1906;
+}
+
+.confirm{
+    background-color: #ff1100;
+}
+
+.delete{
+    background:#fff;
+    color:#000;
+}
+
+.request h4 a{
+    color:#ff1100;
+    text-decoration: none;
+}
