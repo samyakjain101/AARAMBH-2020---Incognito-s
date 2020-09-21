@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 app_name = 'profiles'
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
+    # path('', IndexView.as_view(), name='index'),
     path('register/',anonymous_required(UserRegistration.as_view()),name="register"),
     path('login/', anonymous_required(LoginView.as_view(template_name='profiles/login.html')), name='login'),
     path('logout/', login_required(LogoutView.as_view()), name='logout'),

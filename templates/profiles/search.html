@@ -38,7 +38,7 @@
                 <img src="{{blog.image.url}}" alt='img' width="60px">
             </div>
             <div class="col-sm-10">
-                <h4><a href="#">{{blog}}</a></h4>
+                <h4><a href="{% url 'blog:blog_detail_view' pk=blog.id %}">{{blog}}</a></h4>
             </div>
         </div>
     {% endfor %}
