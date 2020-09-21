@@ -284,80 +284,53 @@ header .search-form .button:hover {
     color: #ffffff;
 }
 
-.pt-1 .card{
-    border:1px solid #ff110055;
+.pt-1 .card {
+    border: 1px solid #ff110055;
 }
 
-.card-body a{
+.card-body a {
     color: #ab1906;
     transition: 0.2sec;
-    text-decoration:none;
+    text-decoration: none;
 }
 
-.card-body a:hover{
+.card-body a:hover {
     color: #ff1100;
 }
 
-.caption{
+.caption {
     padding: 10px 0 0 0;
 }
 
-.card-header strong{
-    height:50%;
+.card-header strong {
+    height: 50%;
     font-size: 1.2rem;
     margin: auto 0.8rem;
 }
 
-.card-body h3.pt-2{
+.card-body h3.pt-2 {
     color: #ff1100;
 }
 
-.userimg{
+.userimg {
     padding: 0 !important;
 }
 
-.form-group .btn{
+.form-group .btn {
     background: #ab1906;
     transition: 0.2s;
     color: #fff;
     text-align: center;
     padding: 0.4rem 0;
 }
+
 .form-group .btn:hover {
     background: #ff1100;
 }
 
-#fb {
-    border: 1px solid #ab1906;
-    border-radius: 5px;
-}
-
-#fb p {
-    margin: 0 0 0 10px;
-    line-height: 30px;
-}
-
-#fb-top span {
-    color: #ff1100;
-    float: right;
-    margin-right: 10px;
-}
-
-
-#info {
-    color: #ff1100;
-    line-height: 25px;
-    font-size: 18px;
-}
-
-#info span {
-    color: #777;
-    font-size: 14px;
-}
-
-.request{
+.request {
     background: #fff;
-    padding:1rem;
+    padding: 1rem;
 }
 
 .confirm,
@@ -368,45 +341,53 @@ header .search-form .button:hover {
     border: 1px solid #ab1906;
 }
 
-.confirm{
+.confirm {
     background-color: #ff1100;
 }
 
-.delete{
-    background:#fff;
-    color:#000;
+.delete {
+    background: #fff;
+    color: #000;
 }
 
-.request h4 a{
-    color:#ff1100;
+.request h4 a {
+    color: #ff1100;
     text-decoration: none;
 }
 
-.modal-title{
-    color:#ff1100;
+.modal-title {
+    color: #ff1100;
 }
 
-.modal-body li{
+.modal-body li {
     list-style: none;
 }
 
-.modal-body h5{
+.modal-body h5 {
     height: 80%;
     margin: auto 0;
 }
 
-.post-form{
+.post-form {
     margin: 0;
 }
 
-#id_content{
+#id_content {
     max-height: 100px;
 }
-.edit-link a{
+
+.edit-link a {
     text-decoration: none;
     color: #ff1100;
 }
 
-.btn-danger{
-    background:#ff1100 !important;
+.btn-danger {
+    background: #ff1100 !important;
+}
+
+.blog-creation-form .col-12 input,
+.blog-creation-form .col-12 textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding:5px;
 }
