@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 # Create your views here.
 
@@ -44,7 +44,7 @@ def feed_view(request):
         form = PostForm()
     return render(request, "post/feed.html" , context = {'feeds': feeds, 'form':form})
 
-class PostDetailView(LoginRequiredMixin ,DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 import channels.layers
@@ -70,6 +70,27 @@ def toggle_like_post(request):
                 #Send notification to Person whose post is liked
                 message = '{} liked your post'.format(user)
                 send_notification(post.author, message)
+
+        except ObjectDoesNotExist:
+            jsonr['message'] = 'Something went wrong.'
+            
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
+@login_required
+def post_comment(request):
+    jsonr = {}
+    if request.is_ajax():
+        post_id = request.POST.get('post_id')
+        comment = request.POST.get('comment')
+        try:
+            post = Post.objects.get(id=post_id)
+            user = User.objects.get(id=request.user.id)
+            Comment.objects.create(
+                user = user,
+                post = post,
+                comment = comment
+            )
+            jsonr['message'] = 'Success'
 
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'

@@ -18,18 +18,20 @@ $(document).ready(function () {
     $('#comment-form').on('submit', function (event) {
         event.preventDefault()
         console.log('Comment')
-        $form = $(this)
-        var formData = new FormData(this);
+        var form = $(this)
+        console.log(form.find("input[name=csrfmiddlewaretoken]"));
         $.ajax({
             type: "POST",
-            url: window.location.pathname,
-            data: formData,
-            processData: false,
-            contentType: false,
+            url: form.find('#comment-input').attr('url'),
+            data: {
+                'post_id': form.find('#comment-input').attr('pid'),
+                'comment': form.find('#comment-input').val(),
+                'csrfmiddlewaretoken': form.find("input[name=csrfmiddlewaretoken]").val()
+            },
             success: handleFormSuccess,
         });
-        function handleFormSuccess(data) {
-            console.log('Success');
+        function handleFormSuccess(json) {
+            console.log(json.message);
         }
     });
 });
