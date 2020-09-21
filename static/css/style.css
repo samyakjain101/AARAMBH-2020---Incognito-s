@@ -394,3 +394,15 @@ header .search-form .button:hover {
     height: 80%;
     margin: auto 0;
 }
+
+.post-form{
+    margin: 0;
+}
+
+#id_content{
+    max-height: 100px;
+}
+
+.btn-danger{
+    background:#ff1100 !important;
+}
