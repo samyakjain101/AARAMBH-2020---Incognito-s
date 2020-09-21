@@ -77,7 +77,7 @@ def toggle_like_post(request):
                 from_email = settings.EMAIL_HOST_USER
                 to_mail = [post.author.email]
                 send_notification(post.author, message)
-                
+                #Send email to Person whose post is liked
                 message = '{} liked your post \n {}'.format(user,post.content)
                 send_email(subject,message,from_email,to_mail)
 
@@ -102,6 +102,16 @@ def post_comment(request):
                 comment = comment
             )
             jsonr['message'] = 'Success'
+
+            #Send notification to Person whose post is commented
+            message = '{} commented on your post'.format(user)
+            subject = "You have 1 notification"
+            from_email = settings.EMAIL_HOST_USER
+            to_mail = [post.author.email]
+            send_notification(post.author, message)
+            #Send email to Person whose post is commented
+            message = '{} commented on your post \n {}'.format(user,post.content)
+            send_email(subject,message,from_email,to_mail)
 
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
