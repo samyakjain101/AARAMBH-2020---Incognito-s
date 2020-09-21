@@ -104,8 +104,10 @@ class ProfileDetailView(DetailView): #this is for global page
     
     def get_context_data(self, **kwargs):          
         context = super().get_context_data(**kwargs)                     
-        context["refer"] = "global" 
-        context["profileUser"] = self.kwargs['username']
+        context["refer"] = "global"
+        context["globalUsername"] = self.kwargs['username']
+        context["globalUser"] = User.objects.get(username=self.kwargs['username'])
+        context["globalProfile"] = Profile.objects.get(user=User.objects.get(username=self.kwargs['username']))
         return context
 
 def search(request):
