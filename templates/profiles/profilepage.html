@@ -5,9 +5,18 @@
 	<div class="container">
 		<div class="profile-details row">
 			<div class="profile-image text-center col-lg-6 pb-3">
-			    {% if profile.profile_photo %}
-					<img src="{{ profile.profile_photo.url }}" alt="">
-			    {% endif %}
+			
+			    {% if refer == "self" %}
+					{% if profile.profile_photo %}
+						<img src="{{ profile.profile_photo.url }}" alt="">
+			    	{% endif %}
+				{% elif refer == "global" %}
+					{% if globalProfile.profile_photo %}
+						<img src="{{ globalProfile.profile_photo.url }}" alt="">
+			    	{% endif %}
+				{% endif %}
+
+				
 			</div>
 					
 			<div class="profile-text col-lg-6 p-3">
@@ -15,32 +24,59 @@
 
 				{% if refer == "self" %}
 					<p>(You are seeing your view. See how others can see you. <a href="/profile/{{user.username}}">here</a>)</p>
-				{% elif request.user.username == profileUser %}
+				{% elif request.user.username == profileUsername %}
 					<p>(You are seeing how other can see you. Get back to your profile <a href="/profile">here</a>)</p>
 				{% endif %}
+
 
 				{% if refer == "self" %}
 					<h6><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></h6>
 				{% endif %}
-				
-					<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
-					<p>{{profile.profession}}</p>
+
+				{% if refer == "self" %}
+						<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
+						<p>{{ profile.profession }}</p>
+				{% elif refer == "global" %}
+						<h1>{{ globalUser.first_name }} {{ globalUser.last_name }}</h1>	
+						<p>{{ globalProfile.profession }}</p>
+				{% endif %}
+
+					
 				</div>
 				<div class="user-bio pb-3">
-					<p>{{ profile.bio | linebreaks }}</p>
+				{% if refer == "self" %}
+						<p>{{ profile.bio | linebreaks }}</p>
+				{% elif refer == "global" %}
+						<p>{{ globalProfile.bio | linebreaks }}</p>
+				{% endif %}
+					
 				</div>
 				<div class="general-info">
 					<h5>General Info</h5>
 					<ul>
+					{% if refer == "self" %}
 						<li><span>Address</span>{{ profile.address }}</li>
 						<li><span>Email</span>{{ profile.user.email }}</li>
 						<li><span>Phone</span>{{ profile.phone }}</li>
+					{% elif refer == "global" %}
+						<li><span>Address</span>{{ globalProfile.address }}</li>
+						<li><span>Email</span>{{ globalProfile.user.email }}</li>
+						<li><span>Phone</span>{{ globalProfile.phone }}</li>
+					{% endif %}
+						
 					</ul>
 				</div>
 				<div class="social-links pt-2">
-					<a href="{{ profile.facebook }}" class="fa fa-lg fa-facebook"></a>
-					<a href="{{ profile.linkedin }}" class="fa fa-lg fa-linkedin"></a>
-					<a href="{{ profile.instagram }}" class="fa fa-lg fa-instagram"></a>
+					{% if refer == "self" %}
+						<a href="{{ profile.facebook }}" class="fa fa-lg fa-facebook"></a>
+						<a href="{{ profile.linkedin }}" class="fa fa-lg fa-linkedin"></a>
+						<a href="{{ profile.instagram }}" class="fa fa-lg fa-instagram"></a>
+					{% elif refer == "global" %}
+						<a href="{{ globalProfile.facebook }}" class="fa fa-lg fa-facebook"></a>
+						<a href="{{ globalProfile.linkedin }}" class="fa fa-lg fa-linkedin"></a>
+						<a href="{{ globalProfile.instagram }}" class="fa fa-lg fa-instagram"></a>
+					{% endif %}
+					
 				</div>
 			</div>
 		</div>
