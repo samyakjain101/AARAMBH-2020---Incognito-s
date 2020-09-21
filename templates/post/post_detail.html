@@ -16,7 +16,7 @@
                 <a href="#" class="col-6"><i class="fa fa-comment"></i> Comment</a>
             </div>
             <div class="row">
-                <small class="col-6">{% if post.likes.all.count == 1 %}{{ post.likes.all.count }} Like{% else %}{{ post.likes.all.count }} Likes{% endif %} , 
+                <small class="col-6">{% if post.likes.all.count == 1 %} <span class="like-count">{{ post.likes.all.count }}</span> Like{% else %}<span class="like-count">{{ post.likes.all.count }}</span> Likes{% endif %} , 
                     {% if post.comment_set.all.count == 1 %}{{ post.comment_set.all.count }} Comment{% else %}{{ post.comment_set.all.count }} Comments{% endif %}
                 </small>
                 <small class="col-6 text-right">{{post.date}}</small>

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.like').on('click', function (event) {
+    $('.post-card').on('click','.like' ,function (event) {
         event.preventDefault()
         console.log('CLicked')
         var btn = $(this)
@@ -13,9 +13,18 @@ $(document).ready(function () {
         });
         function handleFormSuccess(json) {
             console.log(json.message);
+            $.ajax({
+                type: "GET",
+                url: window.location.pathname,
+                success: handleFormSuccess,
+            });
+            function handleFormSuccess(data) {
+                var cardBody = $(data).find('.card-body').html();
+                btn.closest('.card-body').html(cardBody)
+            }
         }
     });
-    $('#comment-form').on('submit', function (event) {
+    $('.post-card').on('submit', '#comment-form', function (event) {
         event.preventDefault()
         console.log('Comment')
         var form = $(this)
@@ -32,6 +41,15 @@ $(document).ready(function () {
         });
         function handleFormSuccess(json) {
             console.log(json.message);
+            $.ajax({
+                type: "GET",
+                url: window.location.pathname,
+                success: handleFormSuccess,
+            });
+            function handleFormSuccess(data) {
+                var cardBody = $(data).find('.card-body').html();
+                form.closest('.card-body').html(cardBody)
+            }
         }
     });
 });
