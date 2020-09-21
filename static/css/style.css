@@ -381,3 +381,28 @@ header .search-form .button:hover {
     color:#ff1100;
     text-decoration: none;
 }
+
+.modal-title{
+    color:#ff1100;
+}
+
+.modal-body li{
+    list-style: none;
+}
+
+.modal-body h5{
+    height: 80%;
+    margin: auto 0;
+}
+
+.post-form{
+    margin: 0;
+}
+
+#id_content{
+    max-height: 100px;
+}
+
+.btn-danger{
+    background:#ff1100 !important;
+}

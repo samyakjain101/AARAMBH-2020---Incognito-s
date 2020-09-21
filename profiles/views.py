@@ -63,15 +63,15 @@ class UserRegistration(CreateView):
             return super().form_valid(form)
 
 
-class ProfileView(TemplateView): #this is self view
-    template_name = "profiles/profilepage.html"
-    def get_context_data(self, **kwargs):
-        profile = Profile.objects.get(user=User.objects.get(id=self.request.user.id))
-        context = {
-            'profile' : profile,
-            'refer' : "self" #this is ensuring all self view components load up
-            }
-        return context
+# class ProfileView(TemplateView): #this is self view
+#     template_name = "profiles/profilepage.html"
+#     def get_context_data(self, **kwargs):
+#         profile = Profile.objects.get(user=User.objects.get(id=self.request.user.id))
+#         context = {
+#             'profile' : profile,
+#             'refer' : "self" #this is ensuring all self view components load up
+#             }
+#         return context
 
 class EditProfile(UpdateView):
     
@@ -104,8 +104,13 @@ class ProfileDetailView(DetailView): #this is for global page
         return get_object_or_404(Profile, user__username=self.kwargs['username'])
     
     def get_context_data(self, **kwargs):          
-        context = super().get_context_data(**kwargs)                     
-        context["refer"] = "global"
+        context = super().get_context_data(**kwargs)        
+
+        if self.request.user.username == self.kwargs['username']:
+            context["refer"] = "self"
+        else:
+            context["refer"] = "global"
+            
         context["globalUsername"] = self.kwargs['username']
         context["globalUser"] = User.objects.get(username=self.kwargs['username'])
         context["globalProfile"] = Profile.objects.get(user=User.objects.get(username=self.kwargs['username']))

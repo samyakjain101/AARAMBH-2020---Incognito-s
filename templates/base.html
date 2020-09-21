@@ -44,7 +44,7 @@
             <div class="menu">
                 <a href="{% url 'post:feed' %}"><i class="fa fa-home"> </i> Home</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'profiles:profile_detail' %}"><i class="fa fa-user"> </i> Profile</a>
+                    <a href="{% url 'profiles:profile_main' request.user.username %}"><i class="fa fa-user"> </i> Profile</a>
                 {% endif %}
                 <a href="{% url 'blog:blog_view_new' %}"><i class="fa fa-file"> </i> Blog</a>                
                 <a href="{% url 'chat:inbox' %}"><i class="fa fa-comment"> </i> Chat</a>

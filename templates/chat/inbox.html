@@ -66,17 +66,17 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style='margin: -0rem  0.3rem -1rem;'>
+                <h4 class="modal-title">Add Chat</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"> + Add Chat</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body mt-1">
                 {% for user in users %}
-                    <li><button class="new_chat_btn" url="{% url 'chat:create_room' %}" user_id="{{ user.id }}">{{ user }}</button></li>
+                    <li class='row'>
+                        <img class='col-2' src = {{ user.profile.profile_photo.url }} alt=''>
+                        <h5><a class="new_chat_btn col-10" url="{% url 'chat:create_room' %}" user_id="{{ user.id }}">{{ user }}</a></h5>
+                    </li>
                 {% endfor %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
 

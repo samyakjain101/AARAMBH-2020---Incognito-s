@@ -22,11 +22,11 @@
 			<div class="profile-text col-lg-6 p-3">
 				<div class="personal-details">
 
-				{% if refer == "self" %}
+				{% comment %} {% if refer == "self" %}
 					<p>(You are seeing your view. See how others can see you. <a href="/profile/{{user.username}}">here</a>)</p>
 				{% elif request.user.username == profileUsername %}
 					<p>(You are seeing how other can see you. Get back to your profile <a href="/profile">here</a>)</p>
-				{% endif %}
+				{% endif %} {% endcomment %}
 
 
 				{% if refer == "self" %}
