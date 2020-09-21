@@ -19,17 +19,19 @@ def send_notification(from_user, to_user, message):
     group_name = 'chat_%s' % to_user.username
     channel_layer = channels.layers.get_channel_layer()
 
+    #Saving notification
+    notify = Notification.objects.create(from_user=from_user,to_user=to_user,text= message)
+    notify.save
+
     async_to_sync(channel_layer.group_send)(
         group_name,
         {
             'type': 'chat_message',
-            'message': message
+            'message': message,
+            'notificationcount' : Notification.objects.filter(to_user=to_user,seen=False).count()
         }
     )
 
-    #Saving notification
-    notify = Notification.objects.create(from_user=from_user,to_user=to_user,text= message)
-    notify.save
 
 @login_required
 def feed_view(request):
