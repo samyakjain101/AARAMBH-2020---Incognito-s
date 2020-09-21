@@ -8,7 +8,7 @@
             <img src="{{ request.from_user.profile.profile_photo.url }}" class="img-circle" alt='img' width="60px">
         </div>
         <div class="col-sm-6">
-            <h4><a href="{% url 'profiles:profile_global' username=request.from_user.username %}">{{ request.from_user.first_name }} {{ request.from_user.last_name }}</a></h4>
+            <h4><a href="{% url 'profiles:profile_main' request.from_user.username %}">{{ request.from_user.first_name }} {{ request.from_user.last_name }}</a></h4>
         </div>
         <div class="col-sm-4 row">
             <button class="btn col-5 mr-2 confirm" url="{% url 'profiles:accept_connection_request' %}" sender="{{ request.from_user.id }}" href="#">Confirm</button>

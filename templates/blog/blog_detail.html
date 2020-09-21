@@ -16,7 +16,7 @@
                     <div class="col-lg-3  col-md-3">
                         <div class="blog_info">
                                         <ul class="blog_meta list">
-                                            <li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+                                            <li><a href="{% url 'profiles:profile_main' request.from_user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
                                             <li>{{ blog.date }}</li>
                                             <li>{{ blog.comments.all.count }} Comments</li>
                                         </ul>
@@ -39,7 +39,7 @@
                                     <img class='userimg' src="{{comment.user.profile.profile_photo.url}}">
                                 </div>
                                 <div class="desc">
-                                    <h5><a href="{% url 'profiles:profile_global' username=comment.user.username %}">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
+                                    <h5><a href="{% url 'profiles:profile_main' request.from_user.username %}">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
                                     <p class="date">{{ comment.date_created }}</p>
                                     <p class="comment">
                                         {{ comment.comment_text }}
