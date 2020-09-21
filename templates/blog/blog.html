@@ -14,7 +14,7 @@
                                 <div class="col-md-3">
                                     <div class="blog_info">
                                         <ul class="blog_meta list">
-                                            <li><a href="{% url 'profiles:profile_main' request.from_user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+                                            <li><a href="{% url 'profiles:profile_main' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
                                             <li>{{ blog.date }}</li>
                                             <li>{{ blog.comments.all.count }} Comments</li>
                                         </ul>
