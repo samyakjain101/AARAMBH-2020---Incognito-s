@@ -1,7 +1,6 @@
 $(document).ready(function () {
     $('.post-card').on('click','.like' ,function (event) {
         event.preventDefault()
-        console.log('CLicked')
         var btn = $(this)
         $.ajax({
             type: "GET",
@@ -12,8 +11,6 @@ $(document).ready(function () {
             success: handleFormSuccess,
         });
         function handleFormSuccess(json) {
-            console.log(json.message);
-            console.log(json.likes_count);
             if (json.likes_count){
                 btn.closest('.card-body').find('.like-count').html(json.likes_count)
             }
@@ -23,7 +20,8 @@ $(document).ready(function () {
         event.preventDefault()
         console.log('Comment')
         var form = $(this)
-        console.log(form.find("input[name=csrfmiddlewaretoken]"));
+        form.find('button').html('<div class="spinner-grow spinner-grow-sm" role="status"> <span class="sr-only">Loading...</span> </div>');
+        
         $.ajax({
             type: "POST",
             url: form.find('#comment-input').attr('url'),
@@ -34,8 +32,8 @@ $(document).ready(function () {
             },
             success: handleFormSuccess,
         });
+
         function handleFormSuccess(json) {
-            console.log(json.message);
             $.ajax({
                 type: "GET",
                 url: window.location.pathname,
@@ -43,7 +41,7 @@ $(document).ready(function () {
             });
             function handleFormSuccess(data) {
                 var cardBody = $(data).find('.card-body').html();
-                form.closest('.card-body').html(cardBody)
+                form.closest('.card-body').html(cardBody);
             }
         }
     });
