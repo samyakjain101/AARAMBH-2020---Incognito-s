@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, CreateView, DetailView
@@ -36,7 +37,7 @@ def anonymous_required(function=None, redirect_url=None):
    return actual_decorator
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin,TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):          
@@ -62,7 +63,7 @@ class UserRegistration(CreateView):
         else:
             return super().form_valid(form)
 
-class EditProfile(UpdateView):
+class EditProfile(LoginRequiredMixin,UpdateView):
     
     def get_object(self):
         return get_object_or_404(Profile, user__username=self.request.user.username)

@@ -1,10 +1,10 @@
 from django.urls import path
-from . import views
+from .views import *
 
 app_name = 'chat'
 
 urlpatterns = [
-    path('inbox/', views.InboxView.as_view(), name='inbox'),
-    path('message/<room_name>/', views.RoomView.as_view(), name='room'),
-    path('ajax/chat/new_room/', views.create_room, name='create_room'),
+    path('inbox/', InboxView.as_view(), name='inbox'),
+    path('message/<room_name>/', RoomView.as_view(), name='room'),
+    path('ajax/chat/new_room/', create_room, name='create_room'),
 ]
