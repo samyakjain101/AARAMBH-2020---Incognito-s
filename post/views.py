@@ -10,6 +10,18 @@ from .models import Post
 from .forms import PostForm
 # Create your views here.
 
+def send_notification(to_user, message):
+    group_name = 'chat_%s' % to_user.username
+    channel_layer = channels.layers.get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        group_name,
+        {
+            'type': 'chat_message',
+            'message': message
+        }
+    )
+
 @login_required
 def feed_view(request):
     connections = [x.user for x in User.objects.get(id=request.user.id).profile.connections.all()]
@@ -56,22 +68,8 @@ def toggle_like_post(request):
                 jsonr['message'] = 'liked'
 
                 #Send notification to Person whose post is liked
-                group_name = 'chat_%s' % post.author.username
                 message = '{} liked your post'.format(user)
-                channel_layer = channels.layers.get_channel_layer()
-
-                async_to_sync(channel_layer.group_send)(
-                    group_name,
-                    {
-                        'type': 'chat_message',
-                        'message': message
-                    }
-                )
-
-                
-
-
-
+                send_notification(post.author, message)
 
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
