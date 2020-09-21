@@ -72,13 +72,13 @@ def toggle_like_post(request):
                 jsonr['message'] = 'liked'
 
                 #Send notification to Person whose post is liked
-                message = '{} liked your post'.format(user)
+                message = '{} {} liked your post'.format(user.first_name,user.last_name)
                 subject = "You have 1 notification"
                 from_email = settings.EMAIL_HOST_USER
                 to_mail = [post.author.email]
                 send_notification(post.author, message)
                 #Send email to Person whose post is liked
-                message = '{} liked your post \n {}'.format(user,post.content)
+                message = '{} {} liked your post \n {}'.format(user.first_name,user.last_name,post.content)
                 send_email(subject,message,from_email,to_mail)
 
         except ObjectDoesNotExist:
@@ -104,13 +104,13 @@ def post_comment(request):
             jsonr['message'] = 'Success'
 
             #Send notification to Person whose post is commented
-            message = '{} commented on your post'.format(user)
+            message = '{} {} commented on your post'.format(user.first_name,user.last_name)
             subject = "You have 1 notification"
             from_email = settings.EMAIL_HOST_USER
             to_mail = [post.author.email]
             send_notification(post.author, message)
             #Send email to Person whose post is commented
-            message = '{} commented on your post \n {}'.format(user,post.content)
+            message = '{} {} commented on your post \n {}'.format(user.first_name,user.last_name,post.content)
             send_email(subject,message,from_email,to_mail)
 
         except ObjectDoesNotExist:

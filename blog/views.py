@@ -4,13 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
-from  django.views.generic.list import ListView
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from blog.models import Blog, Comment
+from django.core.mail import BadHeaderError, send_mail #for sending mail
+from django.conf import settings # for getting from mail (sending mail)
+from post.views import send_notification, send_email
 
 # Create your views here.
 class BlogView(TemplateView):
@@ -112,6 +115,16 @@ def blog_comment(request):
                 comment_text = comment
             )
             jsonr['message'] = 'Success'
+
+            #Send notification to Person whose blog is commented
+            message = '{} commented on your blog'.format(user)
+            subject = "You have 1 notification"
+            from_email = settings.EMAIL_HOST_USER
+            to_mail = [blog.user.email]
+            send_notification(blog.user, message)
+            #Send email to Person whose blog is commented
+            message = '{} commented on your blog \n {}'.format(user,blog.title)
+            send_email(subject,message,from_email,to_mail)
 
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
