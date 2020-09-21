@@ -28,7 +28,7 @@ def send_notification(from_user, to_user, message):
     )
 
     #Saving notification
-    notify = Notification(from_user=from_user,to_user=to_user,text= message)
+    notify = Notification.objects.create(from_user=from_user,to_user=to_user,text= message)
     notify.save
 
 @login_required

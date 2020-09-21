@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.utils import timezone
+from notification.models import Notification
 
 # Create your models here.
 class Profile(models.Model):
@@ -34,6 +35,10 @@ class Profile(models.Model):
         if(self.profile_photo): now+=1
         perc= (now/total)*100
         return int(perc)
+    
+    @property
+    def notificationcount(self):
+        return Notification.objects.filter(to_user=self.user, seen=False).count()
 
     # def get_absolute_url(self):
     #     return u'/profile_detail/%d'
@@ -55,5 +60,3 @@ class ConnectionRequest(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['to_user', 'from_user'],name='connection_request')
         ]
-    
-    
