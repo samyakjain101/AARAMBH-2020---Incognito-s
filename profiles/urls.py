@@ -13,5 +13,6 @@ urlpatterns = [
     path('profile/<str:username>', ProfileDetailView.as_view(), name='profile_global'),
     path('search/', search,name="search"),
     path('ajax/accept_connection_request/', accept_connection_request ,name="accept_connection_request"),
+    path('ajax/reject_connection_request/', reject_connection_request ,name="reject_connection_request"),
 ]
  

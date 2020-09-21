@@ -12,7 +12,7 @@
         </div>
         <div class="col-sm-4 row">
             <button class="btn col-5 mr-2 confirm" url="{% url 'profiles:accept_connection_request' %}" sender="{{ request.from_user.id }}" href="#">Confirm</button>
-            <button class="btn col-5 delete" href="#">Delete</button>
+            <button class="btn col-5 delete" url="{% url 'profiles:reject_connection_request' %}" sender="{{ request.from_user.id }}">Delete</button>
         </div>
     </div>
     {% endfor %}

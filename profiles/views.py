@@ -150,7 +150,25 @@ def accept_connection_request(request):
             delete_request.delete()
             jsonr['message'] = "Friend request accepted"
 
-                
+        except ObjectDoesNotExist:
+            jsonr['error'] = "User does not exist"
+        
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
+@login_required
+def reject_connection_request(request):
+    jsonr = {}
+    if request.is_ajax():
+        current_user = User.objects.get(id=request.user.id)
+        current_user_profile = Profile.objects.get(user=User.objects.get(id=request.user.id))
+        sender_id = request.GET.get('sender') #User who sent the request
+        try:
+            sender = User.objects.get(id=sender_id)
+            sender_profile = Profile.objects.get(user=User.objects.get(id=sender_id))
+            delete_request = ConnectionRequest.objects.get(from_user=sender,to_user=current_user)
+            delete_request.delete()
+            jsonr['message'] = "Friend request rejected"
+
         except ObjectDoesNotExist:
             jsonr['error'] = "User does not exist"
         
