@@ -66,9 +66,6 @@ class UserRegistration(CreateView):
             return super().form_valid(form)
 
 class EditProfile(LoginRequiredMixin,UpdateView):
-    
-    def get_object(self):
-        return get_object_or_404(Profile, user__username=self.request.user.username)
 
     model = Profile
     fields = [
@@ -84,8 +81,25 @@ class EditProfile(LoginRequiredMixin,UpdateView):
     template_name = 'profiles/editprofile.html'
 
     def get_success_url(self):
-        success_url = '/profile'
+        success_url = '/profile/' + self.request.user.username
         return success_url
+    
+    def get_object(self):
+        return get_object_or_404(Profile, user__username=self.request.user.username)
+    
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        from django import forms
+        form = super(EditProfile, self).get_form(form_class)
+        form.fields['phone'].widget = forms.TextInput(attrs={'placeholder': ' Phone','class': 'form-control'})
+        form.fields['profession'].widget = forms.TextInput(attrs={'placeholder': ' Profession','class': 'form-control'})
+        form.fields['facebook'].widget = forms.TextInput(attrs={'placeholder': ' Facebook','class': 'form-control'})
+        form.fields['instagram'].widget = forms.TextInput(attrs={'placeholder': ' Instagram','class': 'form-control'})
+        form.fields['linkedin'].widget = forms.TextInput(attrs={'placeholder': ' LinkedIn','class': 'form-control'})
+        form.fields['address'].widget = forms.Textarea(attrs={'placeholder': ' Somewhere','class': 'form-control'})
+        return form
+
 
 
 class ProfileDetailView(DetailView):

@@ -73,6 +73,7 @@ class EditBlog(LoginRequiredMixin,UpdateView):
     model = Blog
     fields = ['title','text','image']
 
+
     def form_valid(self,form):
 
         if "upload" in self.request.POST:
