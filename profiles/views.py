@@ -17,6 +17,7 @@ from django.urls import reverse
 from blog.models import Blog
 from post.models import Post
 from .forms import *
+from .models import *
 # Create your views here.
 
 def anonymous_required(function=None, redirect_url=None):
@@ -103,8 +104,10 @@ class ProfileDetailView(DetailView): #this is for global page
     
     def get_context_data(self, **kwargs):          
         context = super().get_context_data(**kwargs)                     
-        context["refer"] = "global" 
-        context["profileUser"] = self.kwargs['username']
+        context["refer"] = "global"
+        context["globalUsername"] = self.kwargs['username']
+        context["globalUser"] = User.objects.get(username=self.kwargs['username'])
+        context["globalProfile"] = Profile.objects.get(user=User.objects.get(username=self.kwargs['username']))
         return context
 
 def search(request):
@@ -129,3 +132,46 @@ def search(request):
     posts = Post.objects.filter(p)
 
     return render(request, "profiles/search.html" , context = {'users': users, 'blogs':blogs, 'posts':posts})
+
+@login_required
+def accept_connection_request(request):
+    jsonr = {}
+    if request.is_ajax():
+        current_user = User.objects.get(id=request.user.id)
+        current_user_profile = Profile.objects.get(user=User.objects.get(id=request.user.id))
+        sender_id = request.GET.get('sender') #User who sent the request
+        try:
+            sender = User.objects.get(id=sender_id)
+            sender_profile = Profile.objects.get(user=User.objects.get(id=sender_id))
+            current_user_profile.connections.add(sender_profile)
+            # if created: 
+            #     jsonr['message'] = "Friend request sent"
+            # else:
+            #     jsonr['message'] = "Friend request already sent"
+            delete_request = ConnectionRequest.objects.get(from_user=sender,to_user=current_user)
+            delete_request.delete()
+            jsonr['message'] = "Friend request accepted"
+
+        except ObjectDoesNotExist:
+            jsonr['error'] = "User does not exist"
+        
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
+@login_required
+def reject_connection_request(request):
+    jsonr = {}
+    if request.is_ajax():
+        current_user = User.objects.get(id=request.user.id)
+        current_user_profile = Profile.objects.get(user=User.objects.get(id=request.user.id))
+        sender_id = request.GET.get('sender') #User who sent the request
+        try:
+            sender = User.objects.get(id=sender_id)
+            sender_profile = Profile.objects.get(user=User.objects.get(id=sender_id))
+            delete_request = ConnectionRequest.objects.get(from_user=sender,to_user=current_user)
+            delete_request.delete()
+            jsonr['message'] = "Friend request rejected"
+
+        except ObjectDoesNotExist:
+            jsonr['error'] = "User does not exist"
+        
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')

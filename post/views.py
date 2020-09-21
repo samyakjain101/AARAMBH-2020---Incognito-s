@@ -1,12 +1,16 @@
 import json
 from django.shortcuts import render
+from django.core.mail import BadHeaderError, send_mail #for sending mail
+from django.conf import settings # for getting from mail (sending mail)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.detail import DetailView
-from django.http import HttpResponse
+
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment
+
 from .forms import PostForm
 # Create your views here.
 
@@ -69,12 +73,19 @@ def toggle_like_post(request):
 
                 #Send notification to Person whose post is liked
                 message = '{} liked your post'.format(user)
+                subject = "You have 1 notification"
+                from_email = settings.EMAIL_HOST_USER
+                to_mail = [post.author.email]
                 send_notification(post.author, message)
+                #Send email to Person whose post is liked
+                message = '{} liked your post \n {}'.format(user,post.content)
+                send_email(subject,message,from_email,to_mail)
 
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
             
     return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
 
 @login_required
 def post_comment(request):
@@ -92,7 +103,30 @@ def post_comment(request):
             )
             jsonr['message'] = 'Success'
 
+            #Send notification to Person whose post is commented
+            message = '{} commented on your post'.format(user)
+            subject = "You have 1 notification"
+            from_email = settings.EMAIL_HOST_USER
+            to_mail = [post.author.email]
+            send_notification(post.author, message)
+            #Send email to Person whose post is commented
+            message = '{} commented on your post \n {}'.format(user,post.content)
+            send_email(subject,message,from_email,to_mail)
+
         except ObjectDoesNotExist:
             jsonr['message'] = 'Something went wrong.'
             
     return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
+
+def send_email(subject,message,from_email,to_mail):
+    if subject and message and from_email:
+        try:
+            send_mail(subject, message, from_email, to_mail, fail_silently=True)
+        except BadHeaderError:
+            send_mail("Invalid header found in sent below email", "Subject : " + subject + "\n" + "Message : " + message, from_email, from_email, fail_silently=True)
+            #return HttpResponse('Invalid header found.')
+        #return HttpResponseRedirect('/contact/thanks/')
+    else:
+        send_mail("all field not filled error in sent below email", "Subject : " + subject + "\n" + "Message : " + message, from_email, from_email, fail_silently=True)
+

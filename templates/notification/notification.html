@@ -1,0 +1,37 @@
+{% extends 'base.html' %}{% load static %}
+{% block body_block %}
+<div class="container mb-3" id="connection-request">
+    <h3>Connection Requests</h3>
+    {% for request in connection_requests %}
+    <div class="col-sm-12 row request">
+        <div class="col-sm-2">
+            <img src="{{ request.from_user.profile.profile_photo.url }}" class="img-circle" alt='img' width="60px">
+        </div>
+        <div class="col-sm-6">
+            <h4><a href="{% url 'profiles:profile_global' username=request.from_user.username %}">{{ request.from_user.first_name }} {{ request.from_user.last_name }}</a></h4>
+        </div>
+        <div class="col-sm-4 row">
+            <button class="btn col-5 mr-2 confirm" url="{% url 'profiles:accept_connection_request' %}" sender="{{ request.from_user.id }}" href="#">Confirm</button>
+            <button class="btn col-5 delete" url="{% url 'profiles:reject_connection_request' %}" sender="{{ request.from_user.id }}">Delete</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <h3>Notifications</h3>
+        <div class="col-sm-12 row request">
+            <div class="col-sm-2">
+                <img src="" class="img-circle" alt='img' width="60px">
+            </div>
+            <div class="col-sm-10">
+                <h4><a href="#">Rohan Raghuwanshi</a></h4>
+                <!-- <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto officia iste animi quibusdam id aut.</p> -->
+            </div>
+        </div>
+</div>
+
+{% endblock body_block %}
+{% block script_block %}
+<script src="{% static 'js/connection_request.js' %}"></script>
+{% endblock script_block %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Profile(models.Model):
@@ -43,3 +44,17 @@ def create_profile(sender, **kwargs):
         user_profile = Profile(user=user)
         user_profile.save()
 post_save.connect(create_profile, sender=User)
+
+class ConnectionRequest(models.Model):
+    to_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='connection_requests_sent')
+    from_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='connection_requests_recieved')
+    created = models.DateTimeField(default=timezone.now)
+    rejected = models.DateTimeField(blank=True, null=True)
+    viewed = models.DateTimeField(blank=True, null=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['to_user', 'from_user'],name='connection_request')
+        ]
+    
+    

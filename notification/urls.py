@@ -4,5 +4,5 @@ from .views import *
 app_name = 'notification'
 
 urlpatterns = [
-    path("notification", notification, name="notification"),
+    path("notification/", Notification.as_view(), name="notification"),
 ]
