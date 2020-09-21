@@ -283,3 +283,23 @@ header .search-form .button:hover {
     background: #ab1906;
     color: #ffffff;
 }
+
+.pt-1 .card{
+    border:1px solid #ff110055;
+}
+
+.card-body a{
+    color: #ab1906;
+    transition: 0.2sec;
+    text-decoration:none;
+}
+
+.card-body a:hover{
+    color: #ff1100;
+}
+
+.card-header strong{
+    height:50%;
+    font-size: 1.2rem;
+    margin: auto 0.8rem;
+}
