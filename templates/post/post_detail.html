@@ -23,17 +23,16 @@
             </div>
 
 
-                <div class="comment-list">
-                    <h3 class='pt-2'>Comments</h3>
+                <div class="comment-list mt-4">
                     {% for comment in post.comment_set.all %}
                         <div class="single-comment justify-content-between d-flex">
-                            <div class="col-12 user d-flex">
-                                <div class="thumb">
-                                    <img class='userimg' src="{{ comment.user.profile.profile_photo.url }}" alt='userimg'>
+                            <div class="col-12 user row">
+                                <div class="thumb col-2" style='padding:0'>
+                                    <img class='userimg' src="{{ comment.user.profile.profile_photo.url }}" width=100% height=auto alt='userimg'>
                                 </div>
-                                <div class="desc">
+                                <div class="desc col-9">
                                     <h5><a href="#">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
-                                    <p class="date">{{ comment.date}}</p>
+                                    <small class="date">{{ comment.date}}</small>
                                     <p class="comment">
                                         {{ comment.comment }}
                                     </p>

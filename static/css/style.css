@@ -312,6 +312,10 @@ header .search-form .button:hover {
     color: #ff1100;
 }
 
+.userimg{
+    padding: 0 !important;
+}
+
 .form-group a.btn{
     background: #ab1906;
     transition: 0.2s;
