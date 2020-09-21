@@ -1,3 +1,12 @@
+import re
+import string
+import json
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+from nltk.corpus import stopwords
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -5,6 +14,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, CreateView, DetailView
 from django.views.generic.edit import UpdateView
 from django.urls import reverse
+from blog.models import Blog
+from post.models import Post
 from .forms import *
 # Create your views here.
 
@@ -95,3 +106,26 @@ class ProfileDetailView(DetailView): #this is for global page
         context["refer"] = "global" 
         context["profileUser"] = self.kwargs['username']
         return context
+
+def search(request):
+    search_text = request.GET.get('search')
+    regex = re.compile('[%s]' % re.escape(string.punctuation))
+    porter = PorterStemmer()
+
+    u = Q()
+    b = Q()
+    p = Q()
+
+    for token in word_tokenize(search_text):
+        new_token = regex.sub(u'', token)
+        if not new_token == u'' and not token in stopwords.words('english'):
+            new_token_stem = porter.stem(new_token)
+            u |= Q(username__icontains = new_token)
+            b |= Q(title__icontains = new_token_stem)
+            p |= Q(content__icontains = new_token_stem)
+
+    users = User.objects.filter(u)
+    blogs = Blog.objects.filter(b)
+    posts = Post.objects.filter(p)
+
+    return render(request, "profiles/search.html" , context = {'users': users, 'blogs':blogs, 'posts':posts})

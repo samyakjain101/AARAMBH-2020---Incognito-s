@@ -11,4 +11,5 @@ urlpatterns = [
     path('profile/', login_required(ProfileView.as_view()),name='profile_detail'),
     path('profile/edit/', login_required(EditProfile.as_view()),name='profile_edit'),
     path('profile/<str:username>', ProfileDetailView.as_view(), name='profile_global'),
+    path('search/', search,name="search"),
 ]

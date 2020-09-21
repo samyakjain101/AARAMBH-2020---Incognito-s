@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% load static %}
+{% block body_block %}
+<h1>Search Results:</h1>
+{% if users %}
+    <h3>Users:</h3>
+    {% for user in users %}
+        {{ user }} <br>
+    {% endfor %}
+{% endif %}
+
+{% if blogs %}
+    <h3>Blogs:</h3>
+    {% for blog in blogs %}
+        {{ blog }} <br>
+    {% endfor %}
+{% endif %}
+
+{% if posts %}
+<h3>Posts:</h3>
+    {% for post in posts %}
+        {{ post }} <br>
+    {% endfor %}
+{% endif %}
+
+{% endblock body_block %}
+
+{% block script_block %}
+{% endblock script_block %}

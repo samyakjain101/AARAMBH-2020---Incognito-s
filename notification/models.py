@@ -23,3 +23,5 @@ class UserNotification(models.Model):
 
     def __str__(self):
         return str(self.notification) + str(self.user)
+
+
