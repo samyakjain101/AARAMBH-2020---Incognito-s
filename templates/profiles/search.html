@@ -1,9 +1,10 @@
 {% extends 'base.html' %}{% load static %}
 {% block body_block %}
-<h1>Search Results:</h1>
+<section class='container mt-4'>
+<h2>Search Results:</h2>
 {% if users %}
-<div class="container mb-3" id="search-results-user">
-    <h3>Users:</h3>
+<div class="mb-3 mt-3" id="search-results-user">
+    <h4>Users</h4>
     {% for user1 in users %}
     <div class="col-sm-12 row request">
         <div class="col-sm-2">
@@ -28,13 +29,23 @@
 </div>
 {% endif %}
 
-
+<div class='mb-3 mt-3'>
 {% if blogs %}
     <h3>Blogs:</h3>
     {% for blog in blogs %}
-        {{ blog }} <br>
+        <div class="col-sm-12 row request">
+            <div class="col-sm-2">
+                <img src="{{blog.image.url}}" alt='img' width="60px">
+            </div>
+            <div class="col-sm-10">
+                <h4><a href="#">{{blog}}</a></h4>
+            </div>
+        </div>
     {% endfor %}
 {% endif %}
+
+
+</div>
 
 {% if posts %}
 <h3>Posts:</h3>
@@ -51,6 +62,7 @@
 {% endif %}
 
 </div>
+</section>
 {% endblock body_block %}
 
 {% block script_block %}

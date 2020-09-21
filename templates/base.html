@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <header class="mb-4 shadow-sm">
+    <header class="shadow-sm">
         <div class="header-wrapper p-4 col-12">
             <div class="header-content container row">
 
@@ -60,7 +60,6 @@
         </nav>
         </div>
     </header>
-    {{ user.username|json_script:"notify-room-name" }}
     {% block body_block %}
     {% endblock body_block %}
     <p id="notification"></p>

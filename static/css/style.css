@@ -402,6 +402,10 @@ header .search-form .button:hover {
 #id_content{
     max-height: 100px;
 }
+.edit-link a{
+    text-decoration: none;
+    color: #ff1100;
+}
 
 .btn-danger{
     background:#ff1100 !important;

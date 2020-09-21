@@ -10,10 +10,6 @@
 					{% if profile.profile_photo %}
 						<img src="{{ profile.profile_photo.url }}" alt="">
 			    	{% endif %}
-				{% elif refer == "global" %}
-					{% if globalProfile.profile_photo %}
-						<img src="{{ globalProfile.profile_photo.url }}" alt="">
-			    	{% endif %}
 				{% endif %}
 
 				
@@ -30,12 +26,17 @@
 
 
 				{% if refer == "self" %}
-					<h6><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></h6>
-				{% endif %}
-
-				{% if refer == "self" %}
-						<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
-						<p>{{ profile.profession }}</p>
+							<h1>{{ user.first_name }} {{ user.last_name }}</h1>	
+					<div class='row'>
+						<div class='col-6'>
+							<p>{{ profile.profession }}</p>				
+						</div>
+						{% if refer == "self" %}
+						<div class='col-4 text-right'>
+							<p class='edit-link'><a href="{% url 'profiles:profile_edit' %}">Edit profile</a></p>
+						</div>
+					</div>
+					{% endif %}
 				{% elif refer == "global" %}
 						<h1>{{ globalUser.first_name }} {{ globalUser.last_name }}</h1>	
 						<p>{{ globalProfile.profession }}</p>
