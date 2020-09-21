@@ -20,6 +20,8 @@ from blog.models import Blog
 from post.models import Post
 from .forms import *
 from .models import *
+from django.core.mail import BadHeaderError, send_mail #for sending mail
+from post.views import send_notification, send_email
 # Create your views here.
 
 def anonymous_required(function=None, redirect_url=None):
@@ -149,6 +151,16 @@ def accept_connection_request(request):
             delete_request.delete()
             jsonr['message'] = "Friend request accepted"
 
+            #Send notification to Person whose request is accepted
+            message = '{} {} accepted your connection request'.format(current_user.first_name,current_user.last_name)
+            subject = "You have 1 notification"
+            from_email = settings.EMAIL_HOST_USER
+            to_mail = [sender.email]
+            send_notification(sender, message)
+            #Send email to Person whose request is accepted
+            message = '{} {} accepted your connection request.'.format(current_user.first_name,current_user.last_name)
+            send_email(subject,message,from_email,to_mail)
+
         except ObjectDoesNotExist:
             jsonr['error'] = "User does not exist"
         
@@ -186,6 +198,17 @@ def send_connection_request(request):
                 obj, created = ConnectionRequest.objects.get_or_create(to_user = to_user, from_user = from_user)
                 if created:
                     jsonr['message'] = "Connection request sent"
+
+                    #Send notification to Person to whom request is sent
+                    message = '{} {} requested to connect to you'.format(from_user.first_name,from_user.last_name)
+                    subject = "You have 1 notification"
+                    from_email = settings.EMAIL_HOST_USER
+                    to_mail = [to_user.email]
+                    send_notification(to_user, message)
+                    #Send email to Person to whom request is sent
+                    message = '{} {} requested to connect to you.'.format(from_user.first_name,from_user.last_name)
+                    send_email(subject,message,from_email,to_mail)
+
                 else:
                     obj.created = timezone.now()
                     jsonr['message'] = "Connection request already sent"
