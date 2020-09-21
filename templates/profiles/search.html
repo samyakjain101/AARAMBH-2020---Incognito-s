@@ -11,7 +11,7 @@
             <img src="{{ user1.profile.profile_photo.url }}" class="img-circle" alt='img' width="60px">
         </div>
         <div class="col-sm-6">
-            <h4><a href="#">{{ user1.first_name }} {{ user1.last_name }}</a></h4>
+            <h4><a href="{% url 'profiles:profile_main' username=user1.username %}">{{ user1.first_name }} {{ user1.last_name }}</a></h4>
         </div>
         {% if user == user1 %}
             <div class="col-sm-4 row"> You </div>
