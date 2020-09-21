@@ -307,3 +307,18 @@ header .search-form .button:hover {
     font-size: 1.2rem;
     margin: auto 0.8rem;
 }
+
+.card-body h3.pt-2{
+    color: #ff1100;
+}
+
+.form-group a.btn{
+    background: #ab1906;
+    transition: 0.2s;
+    color: #fff;
+    text-align: center;
+    padding: 0.4rem 0;
+}
+.form-group a.btn:hover {
+    background: #ff1100;
+}
