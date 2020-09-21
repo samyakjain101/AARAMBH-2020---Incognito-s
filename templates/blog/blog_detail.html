@@ -49,10 +49,11 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <form>
+                    <form id="comment-form" method="POST"> 
+                        {% csrf_token %}
                         <div class="form-group row">
-                            <input type="text" class="col-11 form-control" id="subject" placeholder="Comment">
-                            <a href="#" class="col-1 btn"><i class='fa fa-send-o'></i></a>
+                            <input type="text" id="comment-input" pid="{{ blog.id }}" url="{% url 'blog:blog_comment' %}" class="col-11 form-control" placeholder="Comment">
+                            <button type="submit" class="col-1 btn"><i class='fa fa-send-o'></i></button>
                         </div>
                     </form>
                 </div>
@@ -61,3 +62,7 @@
     </div>
 </section>
 {% endblock body_block %}
+
+{% block script_block %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock script_block %}

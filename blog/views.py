@@ -1,12 +1,16 @@
-from blog.models import Blog
+import json
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 from  django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
+from blog.models import Blog, Comment
 
 # Create your views here.
 class BlogView(TemplateView):
@@ -92,3 +96,24 @@ class ManageBlogDetailView(DetailView):
         data['x'] = self.object.text.split("\n")
         data['recent_blogs'] = Blog.objects.filter(display=True,draft=False).exclude(id=self.object.id).order_by('-date')[:3]
         return data
+
+@login_required
+def blog_comment(request):
+    jsonr = {}
+    if request.is_ajax():
+        blog_id = request.POST.get('blog_id')
+        comment = request.POST.get('comment')
+        try:
+            blog = Blog.objects.get(id=blog_id) 
+            user = User.objects.get(id=request.user.id)
+            Comment.objects.create(
+                user = user,
+                blog = blog,
+                comment_text = comment
+            )
+            jsonr['message'] = 'Success'
+
+        except ObjectDoesNotExist:
+            jsonr['message'] = 'Something went wrong.'
+            
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
