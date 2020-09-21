@@ -1,16 +1,41 @@
+{% extends 'base.html' %} {% load static %}
+{% block body_block %}
 {% if blog %}
+<div class='blog-section-div'>
+    <div class="container">
+        <div class="blog-section-wrapper">
+            <section class="blog-section">
+                <div class="blog-wrapper">
+                    <div class="blog-post">
+                        <div class="blog-title">
+                            <h1>{{ blog.title }}</h1>
+                        </div>
+                        <div class="author">
+                            <p>By {{ blog.user }}</p>
+                        </div>
+                        <div class="border-div"></div>
 
-    <h1>{{ blog.title }}</h1>
-    <p>By {{ blog.user }}</p>
+                        {% if blog.image %}
+                        <div class="blog-picture">
+                            <img src="{{ blog.image.url }}" alt="">
+                        </div>
+                        {% endif %}
+                        <div class="publish-date">
+                            {{ blog.date }}
+                        </div>
+                        <div class="blog-content">
+                            {% for para in x %}
+                            <p>{{ para }}</p><br> {% endfor %}
+                        </div>
+                        <div class="blog-comments">
 
-    {% if blog.image %}
-    <img src="{{ blog.image.url }}" alt="">
-    {% endif %}
-
-    {{ blog.date }}
-    {% for para in x %}
-    <p>{{ para }}</p><br> 
-    {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+        </div>
+    </div>
 
 {% endif %}
-
+{% endblock body_block %}

@@ -1,24 +1,31 @@
+{% extends 'base.html' %} {% load static %} {% block body_block %}
 {% if form %}
-
-<h1>Create Blog</h1>
-
-<form enctype="multipart/form-data" method="POST">
-{% csrf_token %}
-{{ form.non_field_errors }}
-
-<label><img src="{% static 'images/itemimg.png' %}" alt=""></label>
-<!-- <label> <input type="file" name="blog-img"></label> -->
-{{ form.image.errors }}
-<label>{{ form.image }}</label>
-
-<!-- <label><input type="text" name='blog-title' placeholder="Title"></label> -->
-{{ form.title.errors }}
-<label>{{ form.title }}</label>
-<!-- <label><textarea name="blog-text" placeholder="Blog Text Here" id="" cols="30" rows="10"></textarea></label> -->
-{{ form.text.errors }}
-<label>{{ form.text }}</label>
-<label><button type="submit" name="draft">Save as draft</button><button type="submit" name="upload">Publish</button></label>
-</form>
-            
+<section class="create-blog-section">
+    <div class="container">
+        <div class="blog-wrapper">
+            <h1>Create Your Blog Here</h1>
+            <div class="blog-form-wrapper">
+                <form class="blog-creation-form" enctype="multipart/form-data" method="POST">
+                  {% csrf_token %}
+                  {{ form.non_field_errors }}
+                    <div>
+                        <label><img src="{% static 'images/itemimg.png' %}" alt=""></label>
+                        <!-- <label> <input type="file" name="blog-img"></label> -->
+                        {{ form.image.errors }}
+                        <label>{{ form.image }}</label>
+                    </div>
+                    <!-- <label><input type="text" name='blog-title' placeholder="Title"></label> -->
+                    {{ form.title.errors }}
+                    <label>{{ form.title }}</label>
+                    <!-- <label><textarea name="blog-text" placeholder="Blog Text Here" id="" cols="30" rows="10"></textarea></label> -->
+                    {{ form.text.errors }}
+                    <label>{{ form.text }}</label>
+                    <label><button type="submit" name="draft">Save as draft</button><button type="submit" name="upload">Publish</button></label>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endif %}
 
+{% endblock body_block %}

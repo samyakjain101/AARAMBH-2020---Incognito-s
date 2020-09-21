@@ -1,17 +1,64 @@
-<imgsrc="{{ blog.image.url }}" alt="">
-<ul>
-<li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
-<li>{{ blog.date }}</li>
-</ul>
-<p>{{ blog.text }}</p>
+{% extends 'base.html' %}{% load static %}
+{% block css_block %}
+<link rel="stylesheet" href="{% static 'css/blog/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog/responsive.css' %}">
+{% endblock css_block %}
+{% block body_block %}
+<section class="blog_area single-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto posts-list">
+                <div class="single-post row">
+                    <div class="col-lg-12">
+                        <div class="feature-img">
+                            <img class="img-fluid" src="{{ blog.image.url }}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-3">
+                        <div class="blog_info">
+                                        <ul class="blog_meta list">
+                                            <li><a href="{% url 'profiles:profile_global' username=blog.user.username %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a></li>
+                                            <li>{{ blog.date }}</li>
+                                            <li>{{ blog.comments.all.count }} Comments</li>
+                                        </ul>
 
-<h4>Comments</h4>
-{% for comment in blog.comment_set.all %}
-
-<img src="{{comment.user.profile.profile_photo.url}}">
-
-<h5><a href="{% url 'profiles:profile_global' username=comment.user.username %}">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
-<p>{{ comment.date_created }}</p>
-<p>{{ comment.comment_text }}</p>
-            
-{% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 blog_details">
+                        <p class="excert">
+                            {{ blog.text }}
+                        </p>
+                    </div>
+                </div>
+                <div class="comments-area">
+                    <h4>Comments</h4>
+                    {% for comment in blog.comment_set.all %}
+                    <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="col-12 user d-flex">
+                                <div class="thumb">
+                                    <img class='userimg' src="{{comment.user.profile.profile_photo.url}}">
+                                </div>
+                                <div class="desc">
+                                    <h5><a href="{% url 'profiles:profile_global' username=comment.user.username %}">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
+                                    <p class="date">{{ comment.date_created }}</p>
+                                    <p class="comment">
+                                        {{ comment.comment_text }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <form>
+                        <div class="form-group row">
+                            <input type="text" class="col-11 form-control" id="subject" placeholder="Comment">
+                            <a href="#" class="col-1 btn"><i class='fa fa-send-o'></i></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body_block %}

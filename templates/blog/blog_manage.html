@@ -1,6 +1,10 @@
-<h1>Manage Blogs</h1>
+{% extends 'base.html' %} {% block body_block %}
 
-        
+<section class="blog-manage-section">
+    <div class="container">
+        <h1>Manage Blogs</h1>
+
+        <div class="blog-details-table">
             {% if blog_list %}
             <table>
                 <tr>
@@ -22,11 +26,20 @@
                       {% else %}
                       <td>To be Verified</td>
                       {% endif %}
-                   <td>{{blog.date}}</td>
+                    <!-- draft and display = Not Published and Verified = Draft
+        draft and not display = Not Published and Not Verified = Draft
+        not draft and display = Uploaded and Verified = Published
+        not draft and not display = Uploaded and Not Verified = Under Process (Verification) -->
+                    <td>{{blog.date}}</td>
                     <td id="edit"> <input type="button" onclick="window.location.href='{{ blog.get_edit_url }}'" value="Edit"></td>
                     <td id="delete"><input type="button" onclick="window.location.href='delete/{{ blog.id }}'" value="Delete"></td>
                 </tr>
                 {% endfor %}
             </table>
             {% endif %}
-      
+        </div>
+    </div>
+
+</section>
+
+{% block footer %} {% endblock footer %} {% endblock body_block %}
