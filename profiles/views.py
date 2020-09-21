@@ -62,17 +62,6 @@ class UserRegistration(CreateView):
         else:
             return super().form_valid(form)
 
-
-# class ProfileView(TemplateView): #this is self view
-#     template_name = "profiles/profilepage.html"
-#     def get_context_data(self, **kwargs):
-#         profile = Profile.objects.get(user=User.objects.get(id=self.request.user.id))
-#         context = {
-#             'profile' : profile,
-#             'refer' : "self" #this is ensuring all self view components load up
-#             }
-#         return context
-
 class EditProfile(UpdateView):
     
     def get_object(self):
@@ -96,7 +85,7 @@ class EditProfile(UpdateView):
         return success_url
 
 
-class ProfileDetailView(DetailView): #this is for global page
+class ProfileDetailView(DetailView):
     object = Profile
     template_name = "profiles/profilepage.html"
 
@@ -110,7 +99,8 @@ class ProfileDetailView(DetailView): #this is for global page
             context["refer"] = "self"
         else:
             context["refer"] = "global"
-            
+
+        context["posts"] = Post.objects.filter(author = User.objects.get(username=self.kwargs['username']))
         context["globalUsername"] = self.kwargs['username']
         context["globalUser"] = User.objects.get(username=self.kwargs['username'])
         context["globalProfile"] = Profile.objects.get(user=User.objects.get(username=self.kwargs['username']))
