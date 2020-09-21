@@ -13,14 +13,9 @@ $(document).ready(function () {
         });
         function handleFormSuccess(json) {
             console.log(json.message);
-            $.ajax({
-                type: "GET",
-                url: window.location.pathname,
-                success: handleFormSuccess,
-            });
-            function handleFormSuccess(data) {
-                var cardBody = $(data).find('.card-body').html();
-                btn.closest('.card-body').html(cardBody)
+            console.log(json.likes_count);
+            if (json.likes_count){
+                btn.closest('.card-body').find('.like-count').html(json.likes_count)
             }
         }
     });
