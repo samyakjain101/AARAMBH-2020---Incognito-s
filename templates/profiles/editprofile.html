@@ -1,4 +1,91 @@
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-</form>
+{% extends 'base.html' %}{% load static %}
+{% block body_block %}
+
+<section class='mt-4 container'>
+
+    {% comment %} <div class='edit-page'>
+        <h2 class='mb-3'>Edit Profile</h2>
+        <form class='form' method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    </div> {% endcomment %}
+
+<div class="container mt-4">
+    <h2 class='m-4'>Edit Profile</h2>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="text-center">
+                <img src="" class="avatar img-circle img-thumbnail"
+                    alt="userimg">
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+        </div>
+        <!--/col-3-->
+        <div class="col-sm-9">
+            <form class="form" action="##" method="post" id="registrationForm">
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="phone">
+                            <h4>Phone</h4>
+                        </label>
+                        <input type="text" class="form-control" name="phone" id="phone"
+                            placeholder="Phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="profession">
+                            <h4>Profession</h4>
+                        </label>
+                        <input type="text" class="form-control" name="profession" id="profession" placeholder="Profession">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="facebook">
+                            <h4>Facebook</h4>
+                        </label>
+                        <input type="text" class="form-control" name="facebook" id="facebook" placeholder="Facebook">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="instagram">
+                            <h4>Instagram</h4>
+                        </label>
+                        <input type="text" class="form-control" name="instagram" id="instagram" placeholder="Instagram">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="linkedin">
+                            <h4>Linked in</h4>
+                        </label>
+                        <input type="text" class="form-control" name="linkedin" id="linkedin" placeholder="Linkedin">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <label for="address">
+                            <h4>Address</h4>
+                        </label>
+                        <textarea class="form-control" id="location" placeholder="Somewhere"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button class="btn col-2 float-right mt-4 btn-lg btn-danger" type="submit"> Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+{% endblock %}
+
+{% block script_block %}
+    <script src="{% static 'js/editprofile.js' %}"></script>
+{% endblock script_block %}

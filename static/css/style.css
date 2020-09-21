@@ -418,3 +418,15 @@ header .search-form .button:hover {
     background: #ff1100;
     color: #fff;
 }
+
+.edit-page{
+    padding:10px;
+}
+
+h2.m-4{
+    color: #ab1906;
+}
+
+.form-group label h4{
+    color:#ff1100;
+}
