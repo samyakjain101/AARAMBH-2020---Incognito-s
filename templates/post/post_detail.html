@@ -25,23 +25,25 @@
 
                 <div class="comment-list">
                     <h3 class='pt-2'>Comments</h3>
+                    {% for comment in post.comment_set.all %}
                         <div class="single-comment justify-content-between d-flex">
                             <div class="col-12 user d-flex">
                                 <div class="thumb">
-                                    <img class='userimg' src="" alt='userimg'>
+                                    <img class='userimg' src="{{ comment.user.profile.profile_photo.url }}" alt='userimg'>
                                 </div>
                                 <div class="desc">
-                                    <h5><a href="#">name here</a></h5>
-                                    <p class="date">date</p>
+                                    <h5><a href="#">{{ comment.user.first_name }} {{ comment.user.last_name }}</a></h5>
+                                    <p class="date">{{ comment.date}}</p>
                                     <p class="comment">
-                                        text
+                                        {{ comment.comment }}
                                     </p>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
                     </div>
 
-                    <form>
+                    <form id="comment-form">
                         <div class="form-group row">
                             <input type="text" class="col-11 form-control" id="subject" placeholder="Comment">
                             <a href="#" class="col-1 btn"><i class='fa fa-send-o'></i></a>

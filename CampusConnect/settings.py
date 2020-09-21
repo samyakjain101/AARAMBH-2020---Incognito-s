@@ -145,3 +145,8 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = "/"
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'incognitos.mailer@gmail.com'
+EMAIL_HOST_PASSWORD = 'Password@123'
+EMAIL_PORT = 587 
