@@ -49,7 +49,6 @@ class ConnectionRequest(models.Model):
     to_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='connection_requests_sent')
     from_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='connection_requests_recieved')
     created = models.DateTimeField(default=timezone.now)
-    rejected = models.DateTimeField(blank=True, null=True)
     viewed = models.DateTimeField(blank=True, null=True)
     
     class Meta:

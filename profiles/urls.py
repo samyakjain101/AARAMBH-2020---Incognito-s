@@ -14,5 +14,6 @@ urlpatterns = [
     path('search/', search,name="search"),
     path('ajax/accept_connection_request/', accept_connection_request ,name="accept_connection_request"),
     path('ajax/reject_connection_request/', reject_connection_request ,name="reject_connection_request"),
+    path('ajax/send_connection_request/', send_connection_request ,name="send_connection_request"),
 ]
  

@@ -1,6 +1,7 @@
 import re
 import string
 import json
+from django.utils import timezone
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
@@ -171,6 +172,30 @@ def reject_connection_request(request):
             delete_request.delete()
             jsonr['message'] = "Friend request rejected"
 
+        except ObjectDoesNotExist:
+            jsonr['error'] = "User does not exist"
+        
+    return HttpResponse(json.dumps(jsonr), content_type='application/json')
+
+# Need some changes. If two people are already friend then can't send request. Handle this case
+@login_required
+def send_connection_request(request):
+    jsonr = {}
+    if request.is_ajax():
+        from_user = User.objects.get(id=request.user.id)
+        to_user_id = request.GET.get('user_id')
+        try:
+            to_user = User.objects.get(id=to_user_id)
+            if not Profile.objects.filter(user=from_user,connections=to_user.profile).exists():
+                obj, created = ConnectionRequest.objects.get_or_create(to_user = to_user, from_user = from_user)
+                if created:
+                    jsonr['message'] = "Connection request sent"
+                else:
+                    obj.created = timezone.now()
+                    jsonr['message'] = "Connection request already sent"
+            else:
+                jsonr['message'] = "Connection already exists."
+                
         except ObjectDoesNotExist:
             jsonr['error'] = "User does not exist"
         
