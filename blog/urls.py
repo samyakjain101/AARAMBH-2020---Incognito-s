@@ -11,4 +11,5 @@ urlpatterns = [
     path('manage_blog/edit/<pk>',views.EditBlog.as_view(),name='blog_edit'),
     path('manage_blog/delete/<pk>',views.BlogDelete.as_view(),name='blog_delete'),
     path('manage_blog/blog/<pk>',views.ManageBlogDetailView.as_view(),name='manage_blog_detail_view'),
+    path('ajax/blog_comment/',views.blog_comment,name='blog_comment'),
 ]

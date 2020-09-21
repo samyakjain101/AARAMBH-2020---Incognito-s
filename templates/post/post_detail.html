@@ -43,7 +43,7 @@
                     {% endfor %}
                     </div>
 
-                    <form id="comment-form">
+                    <form id="comment-form" method="POST">
                         {% csrf_token %}
                         <div class="form-group row">
                             <input type="text" id="comment-input" pid="{{ post.id }}" url="{% url 'post:post_comment' %}" class="col-11 form-control" id="subject" placeholder="Comment">
